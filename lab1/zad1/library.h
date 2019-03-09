@@ -14,7 +14,9 @@ struct arr {
 
 struct arr *createArray(int);
 
-int searchDirectoryAndAdd(struct arr *, char *, char *, char *);
+void searchDirectory(char *, char *, char *);
+
+int addTemporaryFileToBlock(struct arr *, char *);
 
 void removeBlock(struct arr *, int);
 

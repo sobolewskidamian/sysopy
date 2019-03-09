@@ -5,8 +5,10 @@
 #include "library.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <mem.h>
 #include <dirent.h>
+#include <memory.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 struct arr *createArray(int numberOfBlocks) {
     if (numberOfBlocks < 0)
@@ -56,28 +58,28 @@ void removeArray(struct arr *array) {
     }
 }
 
-bool isDirectory(char *path) {
-    if (strchr(path, '.'))
-        return false;
-    else return true;
+int isDirectory(const char *path) {
+    struct stat statbuf;
+    stat(path, &statbuf);
+    return S_ISDIR(statbuf.st_mode);
 }
 
 void find(const char *directory, const char *name, char *temporaryFile) {
     DIR *d = opendir(directory);
     struct dirent *dir;
-
     if (d != NULL) {
         while ((dir = readdir(d)) != NULL) {
             char *entryName = dir->d_name;
-            char *next = malloc(strlen(directory) + strlen(entryName) + 2);
+            if (strcmp(entryName, ".") == 0 || strcmp(entryName, "..") == 0)
+                continue;
+
+            char *next = malloc(strlen(directory) + strlen(entryName) + 3);
             sprintf(next, "%s/%s", directory, entryName);
-            if (isDirectory(entryName)) {
-                if (strcmp(entryName, ".") == 0 || strcmp(entryName, "..") == 0)
-                    continue;
+
+            if (isDirectory(next)) {
                 find(next, name, temporaryFile);
             } else {
                 if (strcmp(entryName, name) == 0) {  //same strings
-                    //*result = &*getPath(directory, name);
                     FILE *fp = fopen(temporaryFile, "a");
                     fprintf(fp, "%s\n", next);
                     fclose(fp);
@@ -85,7 +87,6 @@ void find(const char *directory, const char *name, char *temporaryFile) {
             }
         }
         free(d);
-        closedir(d);
     }
 }
 
@@ -94,22 +95,22 @@ void clenFile(char *file) {
     fclose(fp);
 }
 
-int getSizeOfFile(char *file) {
-    FILE *fp = fopen(file, "r");
+int getSizeOfFile(FILE *fp) {
     if (fp == NULL)
         return -1;
 
     fseek(fp, 0L, SEEK_END);
     long int result = ftell(fp);
-    fclose(fp);
+    fseek(fp, 0L, SEEK_SET);
     return result;
 }
 
 int addTemporaryFileToBlock(struct arr *array, char *temporaryFile) {
-    int size = getSizeOfFile(temporaryFile);
+    FILE *fp = fopen(temporaryFile, "r");
+
+    int size = getSizeOfFile(fp);
     char *result = calloc(size, sizeof(char));
 
-    FILE *fp = fopen(temporaryFile, "r");
     char ch;
     int i = 0;
 
@@ -118,12 +119,10 @@ int addTemporaryFileToBlock(struct arr *array, char *temporaryFile) {
 
     int index = addBlock(array, size, result);
     fclose(fp);
-    free(fp);
     return index;
 }
 
-int searchDirectoryAndAdd(struct arr *array, char *dir, char *fileName, char *tempFile) {
+void searchDirectory(char *dir, char *fileName, char *tempFile) {
     clenFile(tempFile);
     find(dir, fileName, tempFile);
-    return addTemporaryFileToBlock(array, tempFile);
 }

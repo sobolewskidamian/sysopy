@@ -55,3 +55,12 @@ a) (25%) Przygotuj plik Makefile, zawierający polecenia kompilujące program z 
 - z wykorzystaniem bibliotek ładowanych dynamicznie (dynamiczne, ładowane przez program),
 oraz uruchamiający testy.
 Wyniki pomiarów zbierz w pliku results3a.txt. Otrzymane wyniki krótko skomentuj.
+
+```
+b) (25%) Rozszerz plik Makefile z punktu 3a) dodając możliwość skompilowania programu na trzech różnych  poziomach optymalizacji -O0...-Os. Przeprowadź ponownie pomiary kompilując i uruchamiając program dla rożnych poziomów optymalizacji.
+```
+Wyniki pomiarów dodaj do pliku results3b.txt. Otrzymane wyniki krotko skomentuj.
+
+Wygenerowane pliki z raportami załącz jako element rozwiązania.
+
+Uwaga:  Do odczytania pliku można użyć funkcji read (man read), do wywołania zewnętrznego polecenia Unixa można użyć funkcji system (man system).

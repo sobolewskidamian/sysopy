@@ -20,9 +20,9 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < arrTimeCount; i++) {
         tms_time[i] = (struct tms *) malloc(sizeof(struct tms *));
     }
-    char **tempFiles;
+    char **tempFiles = NULL;
     int tempFileIterator = 0;
-    struct arr *array;
+    struct arr *array = NULL;
 
     int index = 0, iterator = 0, arrSize = -1, timesIterator = 0;
     while (index < argc /*&& (arrSize == -1 || iterator <= arrSize)*/) {

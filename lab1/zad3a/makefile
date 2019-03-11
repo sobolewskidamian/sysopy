@@ -1,6 +1,6 @@
 CC = gcc -Wall
 ARGUMENTS = create_table 3 search_directory / \\* temp1 search_directory /usr \\* temp2 search_directory /usr/bin \\* temp3 remove_block 0 remove_block 1 remove_block 2
-FILE = raport3.txt
+FILE = raport3a.txt
 
 all: static dynamic shared
 

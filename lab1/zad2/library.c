@@ -64,35 +64,24 @@ int isDirectory(const char *path) {
     return S_ISDIR(statbuf.st_mode);
 }
 
-void find(const char *directory, const char *name, char *temporaryFile) {
+int find(char *directory, const char *name, char *temporaryFile) {
     DIR *d = opendir(directory);
-    struct dirent *dir;
-    if (d != NULL) {
-        while ((dir = readdir(d)) != NULL) {
-            char *entryName = dir->d_name;
-            if (strcmp(entryName, ".") == 0 || strcmp(entryName, "..") == 0)
-                continue;
+    if (d)
+        closedir(d);
+    else return -1;
 
-            char *next = malloc(strlen(directory) + strlen(entryName) + 3);
-            sprintf(next, "%s/%s", directory, entryName);
+    int commandLength;
+    char *commandBuffer;
 
-            if (isDirectory(next)) {
-                find(next, name, temporaryFile);
-            } else {
-                if (strcmp(entryName, name) == 0) {  //same strings
-                    FILE *fp = fopen(temporaryFile, "a");
-                    fprintf(fp, "%s\n", next);
-                    fclose(fp);
-                }
-            }
-        }
-        free(d);
-    }
-}
+    commandLength = strlen(directory) + strlen(name) + strlen(temporaryFile) + 50;
+    commandBuffer = calloc(commandLength, sizeof(char));
+    sprintf(commandBuffer, "find %s -name %s > %s", directory, name, temporaryFile);
+    printf("%s\n", commandBuffer);
 
-void clenFile(char *file) {
-    FILE *fp = fopen(file, "w");
-    fclose(fp);
+    int res = system(commandBuffer);
+    free(commandBuffer);
+
+    return res;
 }
 
 int getSizeOfFile(FILE *fp) {
@@ -118,11 +107,12 @@ int addTemporaryFileToBlock(struct arr *array, char *temporaryFile) {
         result[i++] = ch;
 
     int index = addBlock(array, size, result);
-    fclose(fp);
+
+    //fclose(fp);
     return index;
 }
 
 void searchDirectory(char *dir, char *fileName, char *tempFile) {
-    clenFile(tempFile);
+    remove(tempFile);
     find(dir, fileName, tempFile);
 }

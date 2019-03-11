@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
     struct arr *array = NULL;
 
     int index = 0, iterator = 0, arrSize = -1, timesIterator = 0;
-    while (index < argc /*&& (arrSize == -1 || iterator <= arrSize)*/) {
+    while (index < argc) {
         if (index == 0 && strcmp(argv[0], "create_table") == 0 && argc >= 2) {
             arrSize = strtol(argv[1], NULL, 10);
             index += 2;

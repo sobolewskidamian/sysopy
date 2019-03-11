@@ -108,7 +108,7 @@ int addTemporaryFileToBlock(struct arr *array, char *temporaryFile) {
 
     int index = addBlock(array, size, result);
 
-    //fclose(fp);
+    fclose(fp);
     return index;
 }
 

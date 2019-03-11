@@ -14,7 +14,8 @@ int main(int argc, char *argv[]) {
     for (int i = 1; i < argc; i++)
         argv[i - 1] = argv[i];
     argc--;
-    int arrTimeCount = 20;
+
+    int arrTimeCount = argc + 7;
     struct tms **tms_time = malloc(arrTimeCount * sizeof(struct tms *));
     clock_t real_time[arrTimeCount];
     for (int i = 0; i < arrTimeCount; i++) {
@@ -26,7 +27,17 @@ int main(int argc, char *argv[]) {
 
     int index = 0, iterator = 0, arrSize = -1, timesIterator = 0;
     while (index < argc) {
+        if (index == 0 && strcmp(argv[0], "create_table") != 0) {
+            printf("Bad arguments - table wasn't created at first");
+            return 0;
+        }
+
         if (index == 0 && strcmp(argv[0], "create_table") == 0 && argc >= 2) {
+            if (atoi(argv[1]) == 0) {
+                printf("Bad arguments - table size isn't an integer");
+                return 0;
+            }
+
             arrSize = strtol(argv[1], NULL, 10);
             index += 2;
             array = createArray(arrSize);

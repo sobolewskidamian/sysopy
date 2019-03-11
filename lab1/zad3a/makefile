@@ -33,3 +33,4 @@ clean:
 	rm -f *.o
 	rm -f *.so
 	rm -f *.a
+	rm -f main

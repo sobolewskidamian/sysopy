@@ -16,12 +16,12 @@ struct arr *createArray(int numberOfBlocks) {
 
     struct arr *result = malloc(sizeof(struct arr));
     result->numberOfBlocks = numberOfBlocks;
-    char **block = calloc(numberOfBlocks, sizeof(char *));
+    char **block = calloc((size_t) numberOfBlocks, sizeof(char *));
     result->blocks = block;
     return result;
 }
 
-int addBlock(struct arr *array, int size, char *block) {
+int addBlock(struct arr *array, long size, char *block) {
     if (array == NULL)
         return -1;
 
@@ -30,7 +30,7 @@ int addBlock(struct arr *array, int size, char *block) {
         index++;
 
     if (index < array->numberOfBlocks) {
-        array->blocks[index] = calloc(size, sizeof(char));
+        array->blocks[index] = calloc((size_t) size, sizeof(char));
         strcpy(array->blocks[index], block);
         free(block);
         return index;
@@ -58,19 +58,13 @@ void removeArray(struct arr *array) {
     }
 }
 
-int isDirectory(const char *path) {
-    struct stat statbuf;
-    stat(path, &statbuf);
-    return S_ISDIR(statbuf.st_mode);
-}
-
 int find(char *directory, const char *name, char *temporaryFile) {
     DIR *d = opendir(directory);
     if (d)
         closedir(d);
     else return -1;
 
-    int commandLength;
+    size_t commandLength;
     char *commandBuffer;
 
     commandLength = strlen(directory) + strlen(name) + strlen(temporaryFile) + 50;
@@ -84,7 +78,7 @@ int find(char *directory, const char *name, char *temporaryFile) {
     return res;
 }
 
-int getSizeOfFile(FILE *fp) {
+long getSizeOfFile(FILE *fp) {
     if (fp == NULL)
         return -1;
 
@@ -97,13 +91,13 @@ int getSizeOfFile(FILE *fp) {
 int addTemporaryFileToBlock(struct arr *array, char *temporaryFile) {
     FILE *fp = fopen(temporaryFile, "r");
 
-    int size = getSizeOfFile(fp);
-    char *result = calloc(size, sizeof(char));
+    long size = getSizeOfFile(fp);
+    char *result = calloc((size_t) size, sizeof(char));
 
     char ch;
     int i = 0;
 
-    while ((ch = fgetc(fp)) != EOF)
+    while ((ch = (char) fgetc(fp)) != EOF)
         result[i++] = ch;
 
     int index = addBlock(array, size, result);

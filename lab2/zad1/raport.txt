@@ -1,0 +1,175 @@
+copy 6000 1 lib
+Real		User		System
+0.000000	0.000000	0.000000
+
+
+sort 6000 1 lib
+Real		User		System
+7.210000	3.240000	3.940000
+
+
+sort 6000 1 sys
+Real		User		System
+15.470000	3.870000	11.580000
+
+
+---------
+
+
+copy 12000 1 sys
+Real		User		System
+0.030000	0.000000	0.020000
+
+
+sort 12000 1 lib
+Real		User		System
+26.080000	10.930000	15.140000
+
+
+sort 12000 1 sys
+Real		User		System
+59.910000	15.250000	44.650000
+
+
+--------------------
+--------------------
+copy 5000 4 lib
+Real		User		System
+0.000000	0.000000	0.000000
+
+
+sort 5000 4 lib
+Real		User		System
+4.790000	2.100000	2.690000
+
+
+sort 5000 4 sys
+Real		User		System
+11.160000	2.850000	8.290000
+
+
+---------
+
+
+copy 10000 4 sys
+Real		User		System
+0.030000	0.000000	0.020000
+
+
+sort 10000 4 lib
+Real		User		System
+18.370000	8.030000	10.330000
+
+
+sort 10000 4 sys
+Real		User		System
+46.340000	11.550000	34.720000
+
+
+--------------------
+--------------------
+copy 4000 512 lib
+Real		User		System
+0.010000	0.000000	0.000000
+
+
+sort 4000 512 lib
+Real		User		System
+3.830000	1.610000	2.210000
+
+
+sort 4000 512 sys
+Real		User		System
+7.320000	1.750000	5.560000
+
+
+---------
+
+
+copy 8000 512 sys
+Real		User		System
+0.030000	0.000000	0.030000
+
+
+sort 8000 512 lib
+Real		User		System
+15.610000	6.070000	9.530000
+
+
+sort 8000 512 sys
+Real		User		System
+32.820000	7.800000	24.970000
+
+
+--------------------
+--------------------
+copy 2000 4096 lib
+Real		User		System
+0.010000	0.000000	0.010000
+
+
+sort 2000 4096 lib
+Real		User		System
+3.330000	0.870000	2.460000
+
+
+sort 2000 4096 sys
+Real		User		System
+3.220000	0.520000	2.670000
+
+
+---------
+
+
+copy 4000 4096 sys
+Real		User		System
+0.030000	0.000000	0.030000
+
+
+sort 4000 4096 lib
+Real		User		System
+13.410000	3.910000	9.440000
+
+
+sort 4000 4096 sys
+Real		User		System
+11.640000	1.910000	9.720000
+
+
+--------------------
+--------------------
+copy 1500 8192 lib
+Real		User		System
+0.020000	0.000000	0.010000
+
+
+sort 1500 8192 lib
+Real		User		System
+3.140000	0.680000	2.440000
+
+
+sort 1500 8192 sys
+Real		User		System
+2.260000	0.300000	1.960000
+
+
+---------
+
+
+copy 3000 8192 sys
+Real		User		System
+0.030000	0.000000	0.030000
+
+
+sort 3000 8192 lib
+Real		User		System
+12.490000	2.680000	9.780000
+
+
+sort 3000 8192 sys
+Real		User		System
+8.780000	1.130000	7.600000
+
+
+--------------------
+--------------------

@@ -61,73 +61,77 @@ void copy_sys(int blockSize, int amountOfBlocks, char *path1, char *path2) {
 
 void sort_sys(int blockSize, int amountOfBlocks, char *path) {
     int file = open(path, O_RDWR);
-    char *reg1 = calloc((size_t) blockSize + 1, sizeof(char));
-    char *reg2 = calloc((size_t) blockSize + 1, sizeof(char));
+    char *it1 = calloc((size_t) blockSize + 1, sizeof(char));
+    char *it2 = calloc((size_t) blockSize + 1, sizeof(char));
     long int sizeOfBlockChar = (blockSize + 1) * sizeof(char);
 
     for (int i = 0; i < amountOfBlocks; i++) {
         lseek(file, i * sizeOfBlockChar, 0);
-        read(file, reg1, (size_t) (blockSize + 1) * sizeof(char));
+        read(file, it1, (size_t) (blockSize + 1) * sizeof(char));
 
         int atIndex = -1;
-        char charAtIndex = reg1[0];
+        char charAtIndex = it1[0];
         for (int j = i + 1; j < amountOfBlocks; j++) {
             lseek(file, j * sizeOfBlockChar, 0);
-            read(file, reg2, (size_t) (blockSize + 1) * sizeof(char));
+            read(file, it2, (size_t) (blockSize + 1) * sizeof(char));
 
-            if (reg2[0] < charAtIndex) {
+            if (it2[0] < charAtIndex) {
                 atIndex = j;
-                charAtIndex = reg2[0];
+                charAtIndex = it2[0];
             }
 
         }
         if (atIndex != -1) {
             lseek(file, atIndex * sizeOfBlockChar, 0);
-            read(file, reg2, (size_t) (blockSize + 1) * sizeof(char));
+            read(file, it2, (size_t) (blockSize + 1) * sizeof(char));
 
             lseek(file, i * sizeOfBlockChar, 0);
-            write(file, reg2, (size_t) (blockSize + 1) * sizeof(char));
+            write(file, it2, (size_t) (blockSize + 1) * sizeof(char));
 
             lseek(file, atIndex * sizeOfBlockChar, 0);
-            write(file, reg1, (size_t) (blockSize + 1) * sizeof(char));
+            write(file, it1, (size_t) (blockSize + 1) * sizeof(char));
         }
     }
     close(file);
-    free(reg1);
-    free(reg2);
+    free(it1);
+    free(it2);
 }
 
 void sort_lib(int blockSize, int amountOfBlocks, char *path) {
     FILE *file = fopen(path, "r+");
-    char *reg1 = calloc((size_t) blockSize + 1, sizeof(char));
-    char *reg2 = calloc((size_t) blockSize + 1, sizeof(char));
+    char *it1 = calloc((size_t) blockSize + 1, sizeof(char));
+    char *it2 = calloc((size_t) blockSize + 1, sizeof(char));
     long int sizeOfBlockChar = (blockSize + 1) * sizeof(char);
 
     for (int i = 0; i < amountOfBlocks; i++) {
         fseek(file, i * sizeOfBlockChar, 0);
-        fread(reg1, sizeof(char), (size_t) blockSize + 1, file);
+        fread(it1, sizeof(char), (size_t) blockSize + 1, file);
 
         int atIndex = -1;
-        char charAtIndex = reg1[0];
+        char charAtIndex = it1[0];
         for (int j = i + 1; j < amountOfBlocks; j++) {
             fseek(file, j * sizeOfBlockChar, 0);
-            fread(reg2, sizeof(char), (size_t) blockSize + 1, file);
+            fread(it2, sizeof(char), (size_t) blockSize + 1, file);
 
-            if (reg2[0] < charAtIndex) {
+            if (it2[0] < charAtIndex) {
                 atIndex = j;
-                charAtIndex = reg2[0];
+                charAtIndex = it2[0];
             }
 
         }
         if (atIndex != -1) {
             fseek(file, atIndex * sizeOfBlockChar, 0);
-            fread(reg2, sizeof(char), (size_t) blockSize + 1, file);
+            fread(it2, sizeof(char), (size_t) blockSize + 1, file);
 
             fseek(file, i * sizeOfBlockChar, 0);
-            fwrite(reg2, sizeof(char), (size_t) blockSize + 1, file);
+            fwrite(it2, sizeof(char), (size_t) blockSize + 1, file);
 
             fseek(file, atIndex * sizeOfBlockChar, 0);
-            fwrite(reg1, sizeof(char), (size_t) blockSize + 1, file);
+            fwrite(it1, sizeof(char), (size_t) blockSize + 1, file);
         }
     }
+
+    fclose(file);
+    free(it1);
+    free(it2);
 }

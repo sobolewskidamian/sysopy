@@ -9,29 +9,29 @@ find / -name \* > temp1
 search_directory / \* temp1
 search
 Real		User		System
-1.510000	0.000000	0.000000
+1.620000	0.000000	0.000000
 
 add [0]
 Real		User		System
-0.400000	0.330000	0.050000
+0.420000	0.390000	0.020000
 
 
 find /usr -name \* > temp2
 search_directory /usr \* temp2
 search
 Real		User		System
-0.430000	0.010000	0.010000
+0.440000	0.000000	0.000000
 
 add [1]
 Real		User		System
-0.090000	0.080000	0.000000
+0.100000	0.090000	0.010000
 
 
 find /usr/bin -name \* > temp3
 search_directory /usr/bin \* temp3
 search
 Real		User		System
-0.010000	0.000000	0.000000
+0.000000	0.000000	0.000000
 
 add [2]
 Real		User		System
@@ -40,12 +40,12 @@ Real		User		System
 
 remove_block 0 
 Real		User		System
-0.000000	0.010000	0.000000
+0.000000	0.000000	0.000000
 
 
 remove_block 1 
 Real		User		System
-0.010000	0.000000	0.000000
+0.000000	0.000000	0.000000
 
 
 remove_block 2 
@@ -55,23 +55,23 @@ Real		User		System
 
 add_and_remove 0
 Real		User		System
-0.480000	0.430000	0.060000
+0.520000	0.460000	0.060000
 
 add_and_remove 1
 Real		User		System
-0.480000	0.430000	0.050000
+0.510000	0.460000	0.040000
 
 add_and_remove 2
 Real		User		System
-0.480000	0.440000	0.040000
+0.500000	0.470000	0.040000
 
 add_and_remove 3
 Real		User		System
-0.480000	0.440000	0.040000
+0.510000	0.460000	0.050000
 
 add_and_remove 4
 Real		User		System
-0.480000	0.460000	0.020000
+0.510000	0.470000	0.040000
 
 
 
@@ -83,85 +83,11 @@ find / -name \* > temp1
 search_directory / \* temp1
 search
 Real		User		System
-1.510000	0.000000	0.000000
+1.620000	0.000000	0.000000
 
 add [0]
 Real		User		System
-0.390000	0.370000	0.020000
-
-
-find /usr -name \* > temp2
-search_directory /usr \* temp2
-search
-Real		User		System
-0.440000	0.000000	0.000000
-
-add [1]
-Real		User		System
-0.090000	0.070000	0.020000
-
-
-find /usr/bin -name \* > temp3
-search_directory /usr/bin \* temp3
-search
-Real		User		System
-0.010000	0.010000	0.000000
-
-add [2]
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 0 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 1 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 2 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-add_and_remove 0
-Real		User		System
-0.490000	0.450000	0.030000
-
-add_and_remove 1
-Real		User		System
-0.480000	0.450000	0.030000
-
-add_and_remove 2
-Real		User		System
-0.480000	0.450000	0.030000
-
-add_and_remove 3
-Real		User		System
-0.470000	0.450000	0.030000
-
-add_and_remove 4
-Real		User		System
-0.480000	0.450000	0.030000
-
-
-
-------
---O2--
-------
-
-find / -name \* > temp1
-search_directory / \* temp1
-search
-Real		User		System
-1.550000	0.000000	0.010000
-
-add [0]
-Real		User		System
-0.380000	0.370000	0.010000
+0.420000	0.400000	0.020000
 
 
 find /usr -name \* > temp2
@@ -203,46 +129,46 @@ Real		User		System
 
 add_and_remove 0
 Real		User		System
-0.470000	0.420000	0.050000
+0.510000	0.480000	0.040000
 
 add_and_remove 1
 Real		User		System
-0.470000	0.430000	0.040000
+0.520000	0.470000	0.050000
 
 add_and_remove 2
 Real		User		System
-0.470000	0.440000	0.030000
+0.520000	0.460000	0.050000
 
 add_and_remove 3
 Real		User		System
-0.470000	0.430000	0.050000
+0.500000	0.470000	0.040000
 
 add_and_remove 4
 Real		User		System
-0.470000	0.430000	0.030000
+0.540000	0.490000	0.050000
 
 
 
 ------
---O3--
+--O2--
 ------
 
 find / -name \* > temp1
 search_directory / \* temp1
 search
 Real		User		System
-1.540000	0.000000	0.000000
+1.690000	0.000000	0.000000
 
 add [0]
 Real		User		System
-0.390000	0.360000	0.030000
+0.480000	0.430000	0.050000
 
 
 find /usr -name \* > temp2
 search_directory /usr \* temp2
 search
 Real		User		System
-0.440000	0.000000	0.000000
+0.480000	0.000000	0.000000
 
 add [1]
 Real		User		System
@@ -277,396 +203,23 @@ Real		User		System
 
 add_and_remove 0
 Real		User		System
-0.480000	0.430000	0.050000
+0.530000	0.500000	0.030000
 
 add_and_remove 1
 Real		User		System
-0.470000	0.420000	0.040000
+0.520000	0.470000	0.050000
 
 add_and_remove 2
 Real		User		System
-0.470000	0.450000	0.020000
+0.510000	0.480000	0.040000
 
 add_and_remove 3
 Real		User		System
-0.460000	0.430000	0.040000
+0.510000	0.470000	0.030000
 
 add_and_remove 4
 Real		User		System
-0.470000	0.420000	0.040000
-
-
-
-------
---O0--
-------
-
-find / -name \* > temp1
-search_directory / \* temp1
-search
-Real		User		System
-1.510000	0.000000	0.000000
-
-add [0]
-Real		User		System
-0.430000	0.370000	0.060000
-
-
-find /usr -name \* > temp2
-search_directory /usr \* temp2
-search
-Real		User		System
-0.430000	0.000000	0.000000
-
-add [1]
-Real		User		System
-0.110000	0.100000	0.000000
-
-
-find /usr/bin -name \* > temp3
-search_directory /usr/bin \* temp3
-search
-Real		User		System
-0.000000	0.000000	0.000000
-
-add [2]
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 0 
-Real		User		System
-0.010000	0.000000	0.000000
-
-
-remove_block 1 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 2 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-add_and_remove 0
-Real		User		System
-0.520000	0.480000	0.040000
-
-add_and_remove 1
-Real		User		System
-0.500000	0.480000	0.020000
-
-add_and_remove 2
-Real		User		System
-0.520000	0.450000	0.070000
-
-add_and_remove 3
-Real		User		System
-0.510000	0.490000	0.020000
-
-add_and_remove 4
-Real		User		System
-0.510000	0.490000	0.020000
-
-
-
-------
---Os--
-------
-
-find / -name \* > temp1
-search_directory / \* temp1
-search
-Real		User		System
-1.520000	0.000000	0.000000
-
-add [0]
-Real		User		System
-0.390000	0.350000	0.040000
-
-
-find /usr -name \* > temp2
-search_directory /usr \* temp2
-search
-Real		User		System
-0.440000	0.000000	0.000000
-
-add [1]
-Real		User		System
-0.090000	0.090000	0.010000
-
-
-find /usr/bin -name \* > temp3
-search_directory /usr/bin \* temp3
-search
-Real		User		System
-0.010000	0.000000	0.000000
-
-add [2]
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 0 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 1 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 2 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-add_and_remove 0
-Real		User		System
-0.480000	0.440000	0.030000
-
-add_and_remove 1
-Real		User		System
-0.480000	0.450000	0.040000
-
-add_and_remove 2
-Real		User		System
-0.470000	0.430000	0.030000
-
-add_and_remove 3
-Real		User		System
-0.460000	0.430000	0.030000
-
-add_and_remove 4
-Real		User		System
-0.470000	0.430000	0.050000
-
-
-
-------------------------------------
-|--------------DYNAMIC-------------|
-------------------------------------
------
---O--
------
-
-find / -name \* > temp1
-search_directory / \* temp1
-search
-Real		User		System
-1.530000	0.000000	0.000000
-
-add [0]
-Real		User		System
-0.180000	0.130000	0.050000
-
-
-find /usr -name \* > temp2
-search_directory /usr \* temp2
-search
-Real		User		System
-0.430000	0.000000	0.000000
-
-add [1]
-Real		User		System
-0.040000	0.040000	0.000000
-
-
-find /usr/bin -name \* > temp3
-search_directory /usr/bin \* temp3
-search
-Real		User		System
-0.010000	0.000000	0.000000
-
-add [2]
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 0 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 1 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 2 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-add_and_remove 0
-Real		User		System
-0.230000	0.170000	0.060000
-
-add_and_remove 1
-Real		User		System
-0.210000	0.190000	0.030000
-
-add_and_remove 2
-Real		User		System
-0.220000	0.200000	0.020000
-
-add_and_remove 3
-Real		User		System
-0.210000	0.180000	0.030000
-
-add_and_remove 4
-Real		User		System
-0.220000	0.190000	0.030000
-
-
-
-------
---O1--
-------
-
-find / -name \* > temp1
-search_directory / \* temp1
-search
-Real		User		System
-1.530000	0.000000	0.010000
-
-add [0]
-Real		User		System
-0.170000	0.150000	0.020000
-
-
-find /usr -name \* > temp2
-search_directory /usr \* temp2
-search
-Real		User		System
-0.440000	0.000000	0.000000
-
-add [1]
-Real		User		System
-0.050000	0.030000	0.020000
-
-
-find /usr/bin -name \* > temp3
-search_directory /usr/bin \* temp3
-search
-Real		User		System
-0.010000	0.000000	0.000000
-
-add [2]
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 0 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 1 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 2 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-add_and_remove 0
-Real		User		System
-0.230000	0.190000	0.040000
-
-add_and_remove 1
-Real		User		System
-0.220000	0.190000	0.030000
-
-add_and_remove 2
-Real		User		System
-0.220000	0.190000	0.030000
-
-add_and_remove 3
-Real		User		System
-0.220000	0.160000	0.060000
-
-add_and_remove 4
-Real		User		System
-0.210000	0.180000	0.030000
-
-
-
-------
---O2--
-------
-
-find / -name \* > temp1
-search_directory / \* temp1
-search
-Real		User		System
-1.600000	0.000000	0.010000
-
-add [0]
-Real		User		System
-0.180000	0.130000	0.030000
-
-
-find /usr -name \* > temp2
-search_directory /usr \* temp2
-search
-Real		User		System
-0.430000	0.000000	0.000000
-
-add [1]
-Real		User		System
-0.050000	0.050000	0.000000
-
-
-find /usr/bin -name \* > temp3
-search_directory /usr/bin \* temp3
-search
-Real		User		System
-0.000000	0.000000	0.000000
-
-add [2]
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 0 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 1 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 2 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-add_and_remove 0
-Real		User		System
-0.220000	0.180000	0.040000
-
-add_and_remove 1
-Real		User		System
-0.200000	0.190000	0.010000
-
-add_and_remove 2
-Real		User		System
-0.200000	0.150000	0.050000
-
-add_and_remove 3
-Real		User		System
-0.210000	0.190000	0.020000
-
-add_and_remove 4
-Real		User		System
-0.210000	0.180000	0.030000
+0.500000	0.460000	0.050000
 
 
 
@@ -678,11 +231,11 @@ find / -name \* > temp1
 search_directory / \* temp1
 search
 Real		User		System
-1.570000	0.000000	0.000000
+1.620000	0.000000	0.000000
 
 add [0]
 Real		User		System
-0.180000	0.140000	0.040000
+0.420000	0.370000	0.040000
 
 
 find /usr -name \* > temp2
@@ -693,23 +246,23 @@ Real		User		System
 
 add [1]
 Real		User		System
-0.050000	0.040000	0.010000
+0.100000	0.090000	0.010000
 
 
 find /usr/bin -name \* > temp3
 search_directory /usr/bin \* temp3
 search
 Real		User		System
-0.000000	0.010000	0.000000
+0.000000	0.000000	0.000000
 
 add [2]
 Real		User		System
-0.010000	0.000000	0.000000
+0.000000	0.000000	0.000000
 
 
 remove_block 0 
 Real		User		System
-0.000000	0.000000	0.000000
+0.010000	0.000000	0.000000
 
 
 remove_block 1 
@@ -724,23 +277,23 @@ Real		User		System
 
 add_and_remove 0
 Real		User		System
-0.220000	0.170000	0.040000
+0.500000	0.460000	0.040000
 
 add_and_remove 1
 Real		User		System
-0.220000	0.190000	0.040000
+0.500000	0.450000	0.040000
 
 add_and_remove 2
 Real		User		System
-0.220000	0.170000	0.040000
+0.490000	0.450000	0.050000
 
 add_and_remove 3
 Real		User		System
-0.210000	0.170000	0.050000
+0.490000	0.460000	0.040000
 
 add_and_remove 4
 Real		User		System
-0.220000	0.170000	0.040000
+0.500000	0.460000	0.030000
 
 
 
@@ -752,11 +305,11 @@ find / -name \* > temp1
 search_directory / \* temp1
 search
 Real		User		System
-1.540000	0.000000	0.000000
+1.610000	0.000000	0.000000
 
 add [0]
 Real		User		System
-0.180000	0.150000	0.030000
+0.450000	0.410000	0.040000
 
 
 find /usr -name \* > temp2
@@ -767,7 +320,7 @@ Real		User		System
 
 add [1]
 Real		User		System
-0.050000	0.040000	0.010000
+0.100000	0.090000	0.010000
 
 
 find /usr/bin -name \* > temp3
@@ -798,23 +351,23 @@ Real		User		System
 
 add_and_remove 0
 Real		User		System
-0.230000	0.200000	0.030000
+0.550000	0.530000	0.030000
 
 add_and_remove 1
 Real		User		System
-0.220000	0.180000	0.050000
+0.540000	0.510000	0.030000
 
 add_and_remove 2
 Real		User		System
-0.240000	0.180000	0.050000
+0.540000	0.500000	0.040000
 
 add_and_remove 3
 Real		User		System
-0.230000	0.200000	0.040000
+0.560000	0.510000	0.050000
 
 add_and_remove 4
 Real		User		System
-0.220000	0.180000	0.040000
+0.560000	0.510000	0.040000
 
 
 
@@ -826,88 +379,11 @@ find / -name \* > temp1
 search_directory / \* temp1
 search
 Real		User		System
-1.520000	0.000000	0.010000
+1.650000	0.000000	0.000000
 
 add [0]
 Real		User		System
-0.170000	0.120000	0.030000
-
-
-find /usr -name \* > temp2
-search_directory /usr \* temp2
-search
-Real		User		System
-0.430000	0.000000	0.000000
-
-add [1]
-Real		User		System
-0.040000	0.040000	0.000000
-
-
-find /usr/bin -name \* > temp3
-search_directory /usr/bin \* temp3
-search
-Real		User		System
-0.010000	0.000000	0.000000
-
-add [2]
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 0 
-Real		User		System
-0.000000	0.000000	0.010000
-
-
-remove_block 1 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 2 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-add_and_remove 0
-Real		User		System
-0.210000	0.170000	0.040000
-
-add_and_remove 1
-Real		User		System
-0.200000	0.170000	0.030000
-
-add_and_remove 2
-Real		User		System
-0.200000	0.170000	0.030000
-
-add_and_remove 3
-Real		User		System
-0.210000	0.180000	0.020000
-
-add_and_remove 4
-Real		User		System
-0.200000	0.160000	0.040000
-
-
-
-------------------------------------
-|--------------SHARED--------------|
-------------------------------------
------
---O--
------
-
-find / -name \* > temp1
-search_directory / \* temp1
-search
-Real		User		System
-1.530000	0.000000	0.000000
-
-add [0]
-Real		User		System
-0.390000	0.360000	0.030000
+0.440000	0.390000	0.050000
 
 
 find /usr -name \* > temp2
@@ -918,81 +394,7 @@ Real		User		System
 
 add [1]
 Real		User		System
-0.100000	0.090000	0.010000
-
-
-find /usr/bin -name \* > temp3
-search_directory /usr/bin \* temp3
-search
-Real		User		System
-0.000000	0.000000	0.000000
-
-add [2]
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 0 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 1 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 2 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-add_and_remove 0
-Real		User		System
-0.500000	0.460000	0.030000
-
-add_and_remove 1
-Real		User		System
-0.480000	0.450000	0.040000
-
-add_and_remove 2
-Real		User		System
-0.490000	0.430000	0.050000
-
-add_and_remove 3
-Real		User		System
-0.470000	0.440000	0.030000
-
-add_and_remove 4
-Real		User		System
-0.490000	0.440000	0.050000
-
-
-
-------
---O1--
-------
-
-find / -name \* > temp1
-search_directory / \* temp1
-search
-Real		User		System
-1.510000	0.000000	0.000000
-
-add [0]
-Real		User		System
-0.410000	0.380000	0.030000
-
-
-find /usr -name \* > temp2
-search_directory /usr \* temp2
-search
-Real		User		System
-0.440000	0.000000	0.000000
-
-add [1]
-Real		User		System
-0.100000	0.080000	0.020000
+0.100000	0.090000	0.000000
 
 
 find /usr/bin -name \* > temp3
@@ -1022,318 +424,22 @@ Real		User		System
 
 
 add_and_remove 0
-Real		User		System
-0.510000	0.460000	0.040000
-
-add_and_remove 1
-Real		User		System
-0.490000	0.450000	0.050000
-
-add_and_remove 2
-Real		User		System
-0.490000	0.460000	0.030000
-
-add_and_remove 3
-Real		User		System
-0.500000	0.470000	0.030000
-
-add_and_remove 4
-Real		User		System
-0.490000	0.460000	0.020000
-
-
-
-------
---O2--
-------
-
-find / -name \* > temp1
-search_directory / \* temp1
-search
-Real		User		System
-1.530000	0.000000	0.000000
-
-add [0]
-Real		User		System
-0.390000	0.370000	0.020000
-
-
-find /usr -name \* > temp2
-search_directory /usr \* temp2
-search
-Real		User		System
-0.450000	0.010000	0.000000
-
-add [1]
-Real		User		System
-0.100000	0.080000	0.010000
-
-
-find /usr/bin -name \* > temp3
-search_directory /usr/bin \* temp3
-search
-Real		User		System
-0.010000	0.000000	0.000000
-
-add [2]
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 0 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 1 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 2 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-add_and_remove 0
-Real		User		System
-0.480000	0.440000	0.040000
-
-add_and_remove 1
-Real		User		System
-0.460000	0.440000	0.030000
-
-add_and_remove 2
-Real		User		System
-0.470000	0.440000	0.020000
-
-add_and_remove 3
-Real		User		System
-0.470000	0.440000	0.040000
-
-add_and_remove 4
-Real		User		System
-0.470000	0.420000	0.040000
-
-
-
-------
---O3--
-------
-
-find / -name \* > temp1
-search_directory / \* temp1
-search
-Real		User		System
-1.520000	0.000000	0.000000
-
-add [0]
-Real		User		System
-0.410000	0.370000	0.040000
-
-
-find /usr -name \* > temp2
-search_directory /usr \* temp2
-search
-Real		User		System
-0.440000	0.000000	0.000000
-
-add [1]
-Real		User		System
-0.090000	0.090000	0.010000
-
-
-find /usr/bin -name \* > temp3
-search_directory /usr/bin \* temp3
-search
-Real		User		System
-0.010000	0.000000	0.000000
-
-add [2]
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 0 
-Real		User		System
-0.000000	0.010000	0.000000
-
-
-remove_block 1 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 2 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-add_and_remove 0
-Real		User		System
-0.510000	0.440000	0.060000
-
-add_and_remove 1
-Real		User		System
-0.500000	0.450000	0.050000
-
-add_and_remove 2
-Real		User		System
-0.490000	0.460000	0.030000
-
-add_and_remove 3
 Real		User		System
 0.500000	0.460000	0.040000
 
-add_and_remove 4
-Real		User		System
-0.490000	0.460000	0.030000
-
-
-
-------
---O0--
-------
-
-find / -name \* > temp1
-search_directory / \* temp1
-search
-Real		User		System
-1.540000	0.000000	0.000000
-
-add [0]
-Real		User		System
-0.420000	0.400000	0.020000
-
-
-find /usr -name \* > temp2
-search_directory /usr \* temp2
-search
-Real		User		System
-0.430000	0.000000	0.000000
-
-add [1]
-Real		User		System
-0.100000	0.090000	0.010000
-
-
-find /usr/bin -name \* > temp3
-search_directory /usr/bin \* temp3
-search
-Real		User		System
-0.010000	0.000000	0.000000
-
-add [2]
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 0 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 1 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 2 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-add_and_remove 0
-Real		User		System
-0.520000	0.490000	0.030000
-
 add_and_remove 1
 Real		User		System
-0.510000	0.480000	0.040000
+0.490000	0.440000	0.060000
 
 add_and_remove 2
 Real		User		System
-0.510000	0.480000	0.030000
+0.490000	0.440000	0.050000
 
 add_and_remove 3
 Real		User		System
-0.510000	0.480000	0.030000
+0.500000	0.480000	0.010000
 
 add_and_remove 4
 Real		User		System
-0.510000	0.490000	0.020000
-
-
-
-------
---Os--
-------
-
-find / -name \* > temp1
-search_directory / \* temp1
-search
-Real		User		System
-1.530000	0.000000	0.000000
-
-add [0]
-Real		User		System
-0.390000	0.350000	0.040000
-
-
-find /usr -name \* > temp2
-search_directory /usr \* temp2
-search
-Real		User		System
-0.430000	0.000000	0.000000
-
-add [1]
-Real		User		System
-0.100000	0.080000	0.010000
-
-
-find /usr/bin -name \* > temp3
-search_directory /usr/bin \* temp3
-search
-Real		User		System
-0.000000	0.000000	0.000000
-
-add [2]
-Real		User		System
-0.000000	0.010000	0.000000
-
-
-remove_block 0 
-Real		User		System
-0.010000	0.000000	0.010000
-
-
-remove_block 1 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-remove_block 2 
-Real		User		System
-0.000000	0.000000	0.000000
-
-
-add_and_remove 0
-Real		User		System
-0.470000	0.430000	0.030000
-
-add_and_remove 1
-Real		User		System
-0.470000	0.440000	0.040000
-
-add_and_remove 2
-Real		User		System
-0.470000	0.450000	0.020000
-
-add_and_remove 3
-Real		User		System
-0.460000	0.430000	0.030000
-
-add_and_remove 4
-Real		User		System
-0.470000	0.450000	0.010000
+0.490000	0.470000	0.030000
 

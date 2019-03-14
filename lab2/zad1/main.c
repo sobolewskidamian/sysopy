@@ -69,9 +69,5 @@ int main(int argc, char *argv[]) {
 
     free(startTimeTms);
     free(endTimeTms);
-
-    /*generate(8192,1500, "temp1.txt");
-    copy_sys(8192, 1500, "temp1.txt", "temp2.txt");
-    sort_sys(8192,1500, "temp1.txt");*/
     return 0;
 }

@@ -31,7 +31,7 @@ void dir_func(char *path, char *operation) {
     DIR *dir = opendir(path);
 
     if (dir == NULL) {
-        printf("It's not a path");
+        printf("Can't open a path");
         return;
     }
 

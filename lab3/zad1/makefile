@@ -6,7 +6,7 @@ compile:
 	$(CC) main.c -o main
 
 run:
-	./main /home/damian/Pulpit/abc "<" "2019-03-18 17:59:00" | tee -a wynik
+	./main /home/damian/Pulpit/abc "<" "2019-03-19 20:00:00"
 
 clean:
 	rm -f *.o

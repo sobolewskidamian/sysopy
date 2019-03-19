@@ -8,9 +8,11 @@
 #include <time.h>
 #include <values.h>
 #include <ftw.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 time_t dateUsr;
-char *operationForNftw;
 
 void print(char *path, const struct stat *fileStat) {
     printf("%s\nType:\t\t\t", path);
@@ -51,26 +53,33 @@ void dir_func(char *path, char *operation) {
             if ((resTime == 0 && strcmp(operation, "=") == 0)
                 || (resTime > 0 && strcmp(operation, "<") == 0)
                 || (resTime < 0 && strcmp(operation, ">") == 0)) {
-                print(newPath, &fileStat);
+                //print(newPath, &fileStat);
+
+                pid_t child_pid = fork();
+                if (child_pid == 0) {
+                    if (S_ISDIR(fileStat.st_mode)) {
+                        printf("\n%s\n", newPath);
+
+                        printf("PID: %d\n", (int) getpid());
+                        char *const av[] = {"ls", "-l", newPath, NULL};
+                        execvp("ls", av);
+                        //printf("\n\n\n");
+                    }
+                    exit(0);
+                }
+                int *statLock = 0;
+                wait(statLock);
             }
-            if (S_ISDIR(fileStat.st_mode))
+
+            if (S_ISDIR(fileStat.st_mode)) {
                 dir_func(newPath, operation);
+            }
 
             dirent = readdir(dir);
         }
     }
     closedir(dir);
     free(dirent);
-}
-
-static int nftw_function(char *fpath, const struct stat *sb) {
-    int resTime = (int) difftime(dateUsr, sb->st_mtime);
-    if ((resTime == 0 && strcmp(operationForNftw, "=") == 0)
-        || (resTime > 0 && strcmp(operationForNftw, "<") == 0)
-        || (resTime < 0 && strcmp(operationForNftw, ">") == 0)) {
-        print(fpath, sb);
-    }
-    return 0;
 }
 
 int main(int argc, char **argv) {
@@ -92,7 +101,7 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    DIR *dir = opendir(realpath(path, NULL));
+    DIR *dir = opendir(path);
     if (dir == NULL) {
         printf("Given path isn't a directory");
         return 1;
@@ -100,13 +109,6 @@ int main(int argc, char **argv) {
     closedir(dir);
 
     dir_func(realpath(path, NULL), operation);
-
-    for (int i = 0; i < 5; i++)
-        printf("--------------------------------------------------------\n");
-    printf("\n");
-
-    operationForNftw = operation;
-    nftw(realpath(path, NULL), (__nftw_func_t) nftw_function, 10, FTW_PHYS);
 
     free(timestamp);
     return 0;

@@ -15,6 +15,8 @@ struct files {
     char *name;
     char *path;
     char *times;
+    int pid;
+    int status;
 };
 
 struct memoryFiles {
@@ -46,11 +48,63 @@ long getSizeOfFile(FILE *fp) {
     return result;
 }
 
-void monitore(int *amountOfChanged, char *path, char *name, int times, time_t modification, char *memory) {
-    int iterator = 0;
-    while (1) {
-        iterator++;
-        sleep((unsigned int) times);
+void copy(char *from, char *to) {
+    pid_t child_pid = fork();
+    if (child_pid == 0) {
+        char *const av[] = {"cp", from, to, NULL};
+        execvp("cp", av);
+        exit(0);
+    }
+    int *statLock = 0;
+    wait(statLock);
+}
+
+
+void monitore2(int *amountOfChanged, char *path, char *name, int times, int timeMainProcess) {
+    struct stat fileStat;
+    struct stat fileStatCopy;
+    char newPath[PATH_MAX];
+    strcpy(newPath, path);
+    strcat(newPath, "/");
+    strcat(newPath, name);
+    lstat(newPath, &fileStat);
+
+    char timeArr[80];
+    char newPathOfCopy[PATH_MAX];
+    struct tm lt;
+    mkdir("archiwum", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    strcpy(newPathOfCopy, "archiwum/");
+    strcat(newPathOfCopy, name);
+    localtime_r(&fileStat.st_mtime, &lt);
+    strftime(timeArr, sizeof timeArr, "_%Y-%m-%d_%H-%M-%S", &lt);
+    strcat(newPathOfCopy, timeArr);
+
+    copy(newPath, newPathOfCopy);
+
+    clock_t start = clock();
+    while ((clock() - start) / CLOCKS_PER_SEC < timeMainProcess) {
+        lstat(newPathOfCopy, &fileStatCopy);
+        clock_t actTime = clock();
+        while ((clock() - actTime) / CLOCKS_PER_SEC < times) {}
+        lstat(newPath, &fileStat);
+        if (fileStat.st_mtime != fileStatCopy.st_mtime) {
+            strcpy(newPathOfCopy, "archiwum/");
+            strcat(newPathOfCopy, name);
+            localtime_r(&fileStat.st_mtime, &lt);
+            strftime(timeArr, sizeof timeArr, "_%Y-%m-%d_%H-%M-%S", &lt);
+            strcat(newPathOfCopy, timeArr);
+            copy(newPath, newPathOfCopy);
+            (*amountOfChanged)++;
+        }
+    }
+}
+
+void monitore1(int *amountOfChanged, char *path, char *name, int times, time_t modification, char *memory,
+               int timeMainProcess) {
+    clock_t start = clock();
+    while ((clock() - start) / CLOCKS_PER_SEC < timeMainProcess) {
+        clock_t actTime = clock();
+        while ((clock() - actTime) / CLOCKS_PER_SEC < times) {}
 
         struct stat fileStat;
         char newPath[PATH_MAX];
@@ -135,7 +189,6 @@ int main(int argc, char **argv) {
 
         memoryFiles = calloc((size_t) numberOfLines, sizeof(struct memoryFiles));
         struct stat fileStat;
-
         for (int i = 0; i < numberOfLines; i++) {
             char newPath[PATH_MAX];
             strcpy(newPath, filesArr[i].path);
@@ -163,18 +216,32 @@ int main(int argc, char **argv) {
             if (child_pid == 0) {
                 char modificationTime[32];
                 sprintf(modificationTime, "%ld", memoryFiles[i].modification);
-                char *const av[] = {argv[0], "MONITORE", filesArr[i].path, filesArr[i].name, filesArr[i].times,
-                                    modificationTime,
-                                    memoryFiles[i].memory, NULL};
-                execvp(argv[0], av);
-                exit(0);
+                if (strcmp(argv[3], "tryb1") == 0) { //tryb1
+                    char *const av[] = {argv[0], "MONITORE", filesArr[i].path, filesArr[i].name, filesArr[i].times,
+                                        modificationTime,
+                                        memoryFiles[i].memory, argv[2], "1", NULL};
+                    execvp(argv[0], av);
+                    return -1;
+                } else { //tryb2
+                    char *const av[] = {argv[0], "MONITORE", filesArr[i].path, filesArr[i].name, filesArr[i].times,
+                                        argv[2], "2", NULL};
+                    execvp(argv[0], av);
+                    return -1;
+                }
+
+            } else if (child_pid > 0) {
+                filesArr[i].pid = child_pid;
+                waitpid(child_pid, &filesArr[i].status, WNOHANG);
             }
-            /*int *statLock = 0;
-            wait(statLock);
-            printf("%d files", WEXITSTATUS(*statLock));*/
         }
 
         sleep((unsigned int) strtol(argv[2], (char **) NULL, 10));
+        /*for (int i = 0; i < numberOfLines; i++)
+            kill(filesArr[i].pid, SIGTERM);*/
+
+        for (int i = 0; i < numberOfLines; i++)
+            printf("Proces %d utworzył %d kopii pliku\n", filesArr[i].pid, WEXITSTATUS(filesArr[i].status));
+
 
         for (int i = 0; i < numberOfLines; i++) {
             free(filesArr[i].name);
@@ -186,10 +253,17 @@ int main(int argc, char **argv) {
         free(filesArr);
         free(memoryFiles);
     } else {
-        int amountOfChanged = 0;
-        monitore(&amountOfChanged, argv[2], argv[3], (int) strtol(argv[4], (char **) NULL, 10),
-                 strtol(argv[5], (char **) NULL, 10), argv[6]);
-        exit(amountOfChanged);
+        if (strcmp(argv[8], "1") == 0) {
+            int amountOfChanged = 0;
+            monitore1(&amountOfChanged, argv[2], argv[3], (int) strtol(argv[4], (char **) NULL, 10),
+                      strtol(argv[5], (char **) NULL, 10), argv[6], (int) strtol(argv[7], (char **) NULL, 10));
+            exit(amountOfChanged);
+        } else {
+            int amountOfChanged = 0;
+            monitore2(&amountOfChanged, argv[2], argv[3], (int) strtol(argv[4], (char **) NULL, 10),
+                      (int) strtol(argv[5], (char **) NULL, 10));
+            exit(amountOfChanged);
+        }
+        return 0;
     }
-    return 0;
 }

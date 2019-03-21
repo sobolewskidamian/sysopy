@@ -7,6 +7,9 @@ compile:
 
 run:
 	./main /home/damian/Pulpit/Sysopy/lab3/zad2/plik 15 tryb2
+	
+test:
+	./main RUN_TESTER /home/damian/Pulpit/Sysopy/lab3/zad2/plik 1 3 100
 
 clean:
 	rm -f *.o

@@ -1,4 +1,5 @@
 #define _XOPEN_SOURCE 700
+#define _DEFAULT_SOURCE
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,6 +11,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <sys/wait.h>
+#include <sys/time.h>
 
 struct files {
     char *name;
@@ -193,7 +195,7 @@ int main(int argc, char **argv) {
 
         pid_t child_pid = fork();
         if (child_pid == 0) {
-            char *const av[] = {argv[0], path, timeForProcessStr, "TRYB1", NULL};
+            char *const av[] = {argv[0], path, timeForProcessStr, "TRYB2", NULL};
             execvp(argv[0], av);
             exit(0);
         }
@@ -218,6 +220,8 @@ int main(int argc, char **argv) {
         }
         int numberOfLines = getNumberOfLines(file);
         filesArr = calloc((size_t) numberOfLines, sizeof(struct files));
+        struct rusage prev_usage;
+        getrusage(RUSAGE_CHILDREN, &prev_usage);
 
         for (int i = 0; i < numberOfLines; i++) {
             filesArr[i].name = calloc(256, sizeof(char));
@@ -298,12 +302,23 @@ int main(int argc, char **argv) {
             } else if (child_pid > 0) {
                 filesArr[i].pid = child_pid;
                 waitpid(child_pid, &filesArr[i].status, /*WNOHANG*/0);
+
+                struct rusage usage;
+                getrusage(RUSAGE_CHILDREN, &usage);
+                struct timeval ru_utime;
+                struct timeval ru_stime;
+                timersub(&usage.ru_utime, &prev_usage.ru_utime, &ru_utime);
+                timersub(&usage.ru_stime, &prev_usage.ru_stime, &ru_stime);
+                prev_usage = usage;
+                printf("\n");
+                printf("User time: %d.%d seconds\nSystem time: %d.%d seconds\n\n", (int) ru_utime.tv_sec,
+                       (int) ru_utime.tv_usec, (int) ru_stime.tv_sec, (int) ru_stime.tv_usec);
             }
         }
 
         //sleep((unsigned int) strtol(argv[2], (char **) NULL, 10));
-        for (int i = 0; i < numberOfLines; i++)
-            kill(filesArr[i].pid, SIGTERM);
+        /*for (int i = 0; i < numberOfLines; i++)
+            kill(filesArr[i].pid, SIGKILL);*/
 
         for (int i = 0; i < numberOfLines; i++)
             printf("Proces %d utworzył %d kopii pliku\n", filesArr[i].pid, WEXITSTATUS(filesArr[i].status));
@@ -313,7 +328,6 @@ int main(int argc, char **argv) {
             free(filesArr[i].name);
             free(filesArr[i].path);
             free(filesArr[i].times);
-            free(memoryFiles[i].memory);
         }
 
         free(filesArr);

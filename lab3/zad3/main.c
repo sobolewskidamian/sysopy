@@ -57,8 +57,8 @@ void copy(char *from, char *to) {
         execvp("cp", av);
         exit(0);
     }
-    int *statLock = 0;
-    wait(statLock);
+    int statLock;
+    wait(&statLock);
 }
 
 
@@ -97,6 +97,7 @@ void monitore2(int *amountOfChanged, char *path, char *name, int times, int time
             strcat(newPathOfCopy, timeArr);
             copy(newPath, newPathOfCopy);
             (*amountOfChanged)++;
+            printf("*\n");
         }
     }
 }
@@ -160,6 +161,27 @@ void testedRunAddToFile(char *path, int blockSize, int seconds) {
     free(commandBuffer);
 }
 
+void limits(char *time, char *memory) {
+    long int timeLimit = strtol(time, (char **) NULL, 10);
+    struct rlimit rlimitCPU;
+    rlimitCPU.rlim_max = (rlim_t) timeLimit;
+    rlimitCPU.rlim_cur = (rlim_t) timeLimit;
+    if (setrlimit(RLIMIT_CPU, &rlimitCPU) != 0) {
+        printf("Can't set cpu limits.🙅");
+        return;
+    }
+
+    long int memoryLimit = strtol(memory, (char **) NULL, 10) * 1024 * 1024;
+    struct rlimit rlimitMemory;
+    rlimitMemory.rlim_max = (rlim_t) memoryLimit;
+    rlimitMemory.rlim_cur = (rlim_t) memoryLimit;
+    if (setrlimit(RLIMIT_AS, &rlimitMemory) != 0) {
+        printf("Can't set memory limits.🙅");
+        return;
+    }
+}
+
+
 int main(int argc, char **argv) {
     if (argc == 1) {
         printf("Bad arguments");
@@ -176,6 +198,11 @@ int main(int argc, char **argv) {
         } else exit(-1);
         exit(amountOfChanged);
     } else if (strcmp(argv[1], "RUN_TESTER") == 0) {
+        if (argc != 6 || atoi(argv[3]) < 0 || atoi(argv[4]) <= 0 || atoi(argv[5]) <= 0) {
+            printf("Bad arguments");
+            return 1;
+        }
+
         srand((unsigned int) time(NULL));
         char *path = argv[2];
         char *pathTemporary = calloc(strlen(path) + 100, sizeof(char));
@@ -195,7 +222,7 @@ int main(int argc, char **argv) {
 
         pid_t child_pid = fork();
         if (child_pid == 0) {
-            char *const av[] = {argv[0], path, timeForProcessStr, "TRYB2", NULL};
+            char *const av[] = {argv[0], path, timeForProcessStr, "TRYB1", "20", "20", NULL};
             execvp(argv[0], av);
             exit(0);
         }
@@ -213,6 +240,11 @@ int main(int argc, char **argv) {
         free(bufferToCreateFile);
         free(timeForProcessStr);
     } else {
+        if (argc != 6 || atoi(argv[2]) <= 0 || atoi(argv[4]) <= 0 || atoi(argv[5]) <= 0) {
+            printf("Bad arguments");
+            return 1;
+        }
+
         FILE *file = fopen(argv[1], "r");
         if (!file) {
             printf("Can't open a file");
@@ -220,8 +252,8 @@ int main(int argc, char **argv) {
         }
         int numberOfLines = getNumberOfLines(file);
         filesArr = calloc((size_t) numberOfLines, sizeof(struct files));
-        struct rusage prev_usage;
-        getrusage(RUSAGE_CHILDREN, &prev_usage);
+        struct rusage prevRusage;
+        getrusage(RUSAGE_CHILDREN, &prevRusage);
 
         for (int i = 0; i < numberOfLines; i++) {
             filesArr[i].name = calloc(256, sizeof(char));
@@ -286,6 +318,7 @@ int main(int argc, char **argv) {
             if (child_pid == 0) {
                 char modificationTime[32];
                 sprintf(modificationTime, "%ld", memoryFiles[i].modification);
+                limits(argv[4], argv[5]);
                 if (strcmp(argv[3], "TRYB1") == 0) { //tryb1
                     char *const av[] = {argv[0], "MONITORE", filesArr[i].path, filesArr[i].name, filesArr[i].times,
                                         modificationTime,
@@ -303,13 +336,13 @@ int main(int argc, char **argv) {
                 filesArr[i].pid = child_pid;
                 waitpid(child_pid, &filesArr[i].status, /*WNOHANG*/0);
 
-                struct rusage usage;
-                getrusage(RUSAGE_CHILDREN, &usage);
+                struct rusage rusage;
+                getrusage(RUSAGE_CHILDREN, &rusage);
                 struct timeval ru_utime;
                 struct timeval ru_stime;
-                timersub(&usage.ru_utime, &prev_usage.ru_utime, &ru_utime);
-                timersub(&usage.ru_stime, &prev_usage.ru_stime, &ru_stime);
-                prev_usage = usage;
+                timersub(&rusage.ru_utime, &prevRusage.ru_utime, &ru_utime);
+                timersub(&rusage.ru_stime, &prevRusage.ru_stime, &ru_stime);
+                prevRusage = rusage;
                 printf("\n");
                 printf("User time: %d.%d seconds\nSystem time: %d.%d seconds\n\n", (int) ru_utime.tv_sec,
                        (int) ru_utime.tv_usec, (int) ru_stime.tv_sec, (int) ru_stime.tv_usec);

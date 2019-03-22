@@ -174,6 +174,11 @@ int main(int argc, char **argv) {
         } else exit(-1);
         exit(amountOfChanged);
     } else if (strcmp(argv[1], "RUN_TESTER") == 0) {
+        if (argc != 6 || atoi(argv[3]) < 0 || atoi(argv[4]) <= 0 || atoi(argv[5]) <= 0) {
+            printf("Bad arguments");
+            return 1;
+        }
+
         srand((unsigned int) time(NULL));
         char *path = argv[2];
         char *pathTemporary = calloc(strlen(path) + 100, sizeof(char));
@@ -211,6 +216,11 @@ int main(int argc, char **argv) {
         free(bufferToCreateFile);
         free(timeForProcessStr);
     } else {
+        if (argc != 4 || atoi(argv[2]) <= 0) {
+            printf("Bad arguments");
+            return 1;
+        }
+
         FILE *file = fopen(argv[1], "r");
         if (!file) {
             printf("Can't open a file");

@@ -97,7 +97,7 @@ void monitore2(int *amountOfChanged, char *path, char *name, int times, int time
             strcat(newPathOfCopy, timeArr);
             copy(newPath, newPathOfCopy);
             (*amountOfChanged)++;
-            printf("*\n");
+            //printf("*\n");
         }
     }
 }
@@ -167,7 +167,7 @@ void limits(char *time, char *memory) {
     rlimitCPU.rlim_max = (rlim_t) timeLimit;
     rlimitCPU.rlim_cur = (rlim_t) timeLimit;
     if (setrlimit(RLIMIT_CPU, &rlimitCPU) != 0) {
-        printf("Can't set cpu limits.🙅");
+        printf("Can't set cpu limits.");
         return;
     }
 
@@ -176,7 +176,7 @@ void limits(char *time, char *memory) {
     rlimitMemory.rlim_max = (rlim_t) memoryLimit;
     rlimitMemory.rlim_cur = (rlim_t) memoryLimit;
     if (setrlimit(RLIMIT_AS, &rlimitMemory) != 0) {
-        printf("Can't set memory limits.🙅");
+        printf("Can't set memory limits.");
         return;
     }
 }

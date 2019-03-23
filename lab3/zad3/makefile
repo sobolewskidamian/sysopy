@@ -6,7 +6,7 @@ compile:
 	$(CC) main.c -o main
 
 run:
-	./main /home/damian/Pulpit/Sysopy/lab3/zad3/plik 15 tryb2 20 20
+	./main /home/damian/Pulpit/Sysopy/lab3/zad3/plik 15 TRYB1 20 20
 	
 test:
 	make compile

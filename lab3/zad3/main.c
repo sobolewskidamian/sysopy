@@ -56,20 +56,21 @@ void copy(char *from, char *to) {
         char *const av[] = {"cp", from, to, NULL};
         execvp("cp", av);
         exit(0);
+    }else {
+        int statLock = 0;
+        wait(&statLock);
     }
-    int statLock;
-    wait(&statLock);
 }
 
 
 void monitore2(int *amountOfChanged, char *path, char *name, int times, int timeMainProcess) {
     struct stat fileStat;
-    struct stat fileStatCopy;
     char newPath[PATH_MAX];
     strcpy(newPath, path);
     strcat(newPath, "/");
     strcat(newPath, name);
     lstat(newPath, &fileStat);
+    time_t lastUpdate = fileStat.st_mtime;
 
     char timeArr[80];
     char newPathOfCopy[PATH_MAX];
@@ -85,11 +86,11 @@ void monitore2(int *amountOfChanged, char *path, char *name, int times, int time
 
     clock_t start = clock();
     while ((clock() - start) / CLOCKS_PER_SEC < timeMainProcess) {
-        lstat(newPathOfCopy, &fileStatCopy);
         clock_t actTime = clock();
         while ((clock() - actTime) / CLOCKS_PER_SEC < times) {}
         lstat(newPath, &fileStat);
-        if (fileStat.st_mtime != fileStatCopy.st_mtime) {
+        if (fileStat.st_mtime != lastUpdate) {
+            lastUpdate = fileStat.st_mtime;
             strcpy(newPathOfCopy, "archiwum/");
             strcat(newPathOfCopy, name);
             localtime_r(&fileStat.st_mtime, &lt);
@@ -97,7 +98,6 @@ void monitore2(int *amountOfChanged, char *path, char *name, int times, int time
             strcat(newPathOfCopy, timeArr);
             copy(newPath, newPathOfCopy);
             (*amountOfChanged)++;
-            //printf("*\n");
         }
     }
 }
@@ -222,7 +222,7 @@ int main(int argc, char **argv) {
 
         pid_t child_pid = fork();
         if (child_pid == 0) {
-            char *const av[] = {argv[0], path, timeForProcessStr, "TRYB1", "20", "20", NULL};
+            char *const av[] = {argv[0], path, timeForProcessStr, "TRYB2", "20", "20", NULL};
             execvp(argv[0], av);
             exit(0);
         }
@@ -331,30 +331,27 @@ int main(int argc, char **argv) {
                     execvp(argv[0], av);
                     return -1;
                 }
-
-            } else if (child_pid > 0) {
-                filesArr[i].pid = child_pid;
-                waitpid(child_pid, &filesArr[i].status, /*WNOHANG*/0);
-
-                struct rusage rusage;
-                getrusage(RUSAGE_CHILDREN, &rusage);
-                struct timeval ru_utime;
-                struct timeval ru_stime;
-                timersub(&rusage.ru_utime, &prevRusage.ru_utime, &ru_utime);
-                timersub(&rusage.ru_stime, &prevRusage.ru_stime, &ru_stime);
-                prevRusage = rusage;
-                printf("\n");
-                printf("User time: %d.%d seconds\nSystem time: %d.%d seconds\n\n", (int) ru_utime.tv_sec,
-                       (int) ru_utime.tv_usec, (int) ru_stime.tv_sec, (int) ru_stime.tv_usec);
             }
         }
 
-        //sleep((unsigned int) strtol(argv[2], (char **) NULL, 10));
-        /*for (int i = 0; i < numberOfLines; i++)
-            kill(filesArr[i].pid, SIGKILL);*/
+        for (int i = 0; i < numberOfLines; i++) {
+            int s = 0;
+            pid_t finished;
+            finished = waitpid(-1, &s, 0);
+            s = s >> 8;
 
-        for (int i = 0; i < numberOfLines; i++)
-            printf("Proces %d utworzył %d kopii pliku\n", filesArr[i].pid, WEXITSTATUS(filesArr[i].status));
+            struct rusage rusage;
+            getrusage(RUSAGE_CHILDREN, &rusage);
+            struct timeval ru_utime;
+            struct timeval ru_stime;
+            timersub(&rusage.ru_utime, &prevRusage.ru_utime, &ru_utime);
+            timersub(&rusage.ru_stime, &prevRusage.ru_stime, &ru_stime);
+            prevRusage = rusage;
+            printf("\n");
+            printf("User time: %d.%d seconds\nSystem time: %d.%d seconds\n\n", (int) ru_utime.tv_sec,
+                   (int) ru_utime.tv_usec, (int) ru_stime.tv_sec, (int) ru_stime.tv_usec);
+            printf("Proces %d utworzył %d kopii pliku\n", finished, s);
+        }
 
 
         for (int i = 0; i < numberOfLines; i++) {

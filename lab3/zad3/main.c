@@ -17,8 +17,6 @@ struct files {
     char *name;
     char *path;
     char *times;
-    int pid;
-    int status;
 };
 
 struct memoryFiles {
@@ -222,7 +220,7 @@ int main(int argc, char **argv) {
 
         pid_t child_pid = fork();
         if (child_pid == 0) {
-            char *const av[] = {argv[0], path, timeForProcessStr, "TRYB2", "20", "20", NULL};
+            char *const av[] = {argv[0], path, timeForProcessStr, "TRYB1", "20", "20", NULL};
             execvp(argv[0], av);
             exit(0);
         }

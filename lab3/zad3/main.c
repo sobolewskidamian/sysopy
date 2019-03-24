@@ -54,12 +54,11 @@ void copy(char *from, char *to) {
         char *const av[] = {"cp", from, to, NULL};
         execvp("cp", av);
         exit(0);
-    }else {
+    } else {
         int statLock = 0;
         wait(&statLock);
     }
 }
-
 
 void monitore2(int *amountOfChanged, char *path, char *name, int times, int timeMainProcess) {
     struct stat fileStat;
@@ -142,23 +141,6 @@ void monitore1(int *amountOfChanged, char *path, char *name, int times, time_t m
     }
 }
 
-void testedRunAddToFile(char *path, int blockSize, int seconds) {
-    char timeArr[80];
-    time_t rawtime = time(NULL);
-    struct tm *ptm = localtime(&rawtime);
-    strftime(timeArr, 80, "%Y-%m-%d %H:%M:%S", ptm);
-    char *commandBufferFirst = calloc(200 + strlen(path), sizeof(char));
-    char *commandBuffer = calloc(200 + strlen(path), sizeof(char));
-    sprintf(commandBufferFirst, "echo '\n\nPID: %d\nSECONDS: %d\nDATE: %s' >> %s", getpid(), seconds, timeArr, path);
-    sprintf(commandBuffer, "cat /dev/urandom | base64 | head -c %d >> %s", blockSize, path);
-
-    system(commandBufferFirst);
-    system(commandBuffer);
-
-    free(commandBufferFirst);
-    free(commandBuffer);
-}
-
 void limits(char *time, char *memory) {
     long int timeLimit = strtol(time, (char **) NULL, 10);
     struct rlimit rlimitCPU;
@@ -179,12 +161,12 @@ void limits(char *time, char *memory) {
     }
 }
 
-
 int main(int argc, char **argv) {
     if (argc == 1) {
         printf("Bad arguments");
         return 1;
     }
+
     if (strcmp(argv[1], "MONITORE") == 0) {
         int amountOfChanged = 0;
         if (argc == 9 && strcmp(argv[8], "1") == 0) {
@@ -195,48 +177,6 @@ int main(int argc, char **argv) {
                       (int) strtol(argv[5], (char **) NULL, 10));
         } else exit(-1);
         exit(amountOfChanged);
-    } else if (strcmp(argv[1], "RUN_TESTER") == 0) {
-        if (argc != 6 || atoi(argv[3]) < 0 || atoi(argv[4]) <= 0 || atoi(argv[5]) <= 0) {
-            printf("Bad arguments");
-            return 1;
-        }
-
-        srand((unsigned int) time(NULL));
-        char *path = argv[2];
-        char *pathTemporary = calloc(strlen(path) + 100, sizeof(char));
-        char *bufferToCreateFile = calloc(50 + strlen(path), sizeof(char));
-        strcpy(pathTemporary, path);
-        strcat(pathTemporary, "-temporary");
-        sprintf(bufferToCreateFile, "touch %s", pathTemporary);
-        system(bufferToCreateFile);
-
-        char *timeForProcessStr = calloc(20, sizeof(char));
-        int blockSize = (int) strtol(argv[5], (char **) NULL, 10);
-        int time1 = (int) strtol(argv[3], (char **) NULL, 10);
-        int time2 = (int) strtol(argv[4], (char **) NULL, 10);
-        int timeInSeconds = rand() % (time2 - time1) + time1;
-        int timeForProcess = 10;
-        sprintf(timeForProcessStr, "%d", timeForProcess);
-
-        pid_t child_pid = fork();
-        if (child_pid == 0) {
-            char *const av[] = {argv[0], path, timeForProcessStr, "TRYB1", "20", "20", NULL};
-            execvp(argv[0], av);
-            exit(0);
-        }
-
-        testedRunAddToFile(pathTemporary, blockSize, timeInSeconds);
-        clock_t start = clock();
-        while ((clock() - start) / CLOCKS_PER_SEC < timeForProcess) {
-            clock_t actTime = clock();
-            while ((clock() - actTime) / CLOCKS_PER_SEC < timeInSeconds) {}
-            timeInSeconds = rand() % (time2 - time1 + 1) + time1;
-            testedRunAddToFile(pathTemporary, blockSize, timeInSeconds);
-        }
-
-        free(pathTemporary);
-        free(bufferToCreateFile);
-        free(timeForProcessStr);
     } else {
         if (argc != 6 || atoi(argv[2]) <= 0 || atoi(argv[4]) <= 0 || atoi(argv[5]) <= 0) {
             printf("Bad arguments");
@@ -350,7 +290,6 @@ int main(int argc, char **argv) {
                    (int) ru_utime.tv_usec, (int) ru_stime.tv_sec, (int) ru_stime.tv_usec);
             printf("Proces %d utworzył %d kopii pliku\n", finished, s);
         }
-
 
         for (int i = 0; i < numberOfLines; i++) {
             free(filesArr[i].name);

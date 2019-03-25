@@ -44,7 +44,7 @@ char *removeFileName(char *mystr) {
 
 char *getFileName(char *mystr) {
     char *dot = strrchr(mystr, '/');
-    if(!dot || dot == mystr) return "";
+    if (!dot || dot == mystr) return "";
     return dot + 1;
 }
 

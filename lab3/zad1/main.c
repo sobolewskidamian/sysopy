@@ -1,5 +1,3 @@
-#define _XOPEN_SOURCE 700
-
 #include <stdio.h>
 #include <dirent.h>
 #include <sys/stat.h>
@@ -11,8 +9,6 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-
-time_t dateUsr;
 
 void dir_func(char *path, char *subPath) {
     DIR *dir = opendir(path);

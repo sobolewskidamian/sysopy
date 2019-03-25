@@ -161,6 +161,25 @@ void limits(char *time, char *memory) {
     }
 }
 
+double convertTime(struct timeval *timeval) {
+    return timeval->tv_sec + (double) timeval->tv_usec / 1000000.0;
+}
+
+void printRusage(int copies) {
+    struct rusage rusageSelf;
+    struct rusage rusageChildren;
+    getrusage(RUSAGE_SELF, &rusageSelf);
+    getrusage(RUSAGE_CHILDREN, &rusageChildren);
+
+    printf("--- %d ---\n", getpid());
+    printf("Proces %d utworzył %d kopii pliku\n", getpid(),copies);
+    printf("User time [self]:\t%lf seconds\n", convertTime(&rusageSelf.ru_utime));
+    printf("System time [self]:\t%lf seconds\n", convertTime(&rusageSelf.ru_stime));
+    printf("User time [children]:\t%lf seconds\n", convertTime(&rusageChildren.ru_utime));
+    printf("System time [children]:\t%lf seconds\n\n\n", convertTime(&rusageChildren.ru_stime));
+}
+
+
 int main(int argc, char **argv) {
     if (argc == 1) {
         printf("Bad arguments");
@@ -176,6 +195,8 @@ int main(int argc, char **argv) {
             monitore2(&amountOfChanged, argv[2], argv[3], (int) strtol(argv[4], (char **) NULL, 10),
                       (int) strtol(argv[5], (char **) NULL, 10));
         } else exit(-1);
+
+        printRusage(amountOfChanged);
         exit(amountOfChanged);
     } else {
         if (argc != 6 || atoi(argv[2]) <= 0 || atoi(argv[4]) <= 0 || atoi(argv[5]) <= 0) {
@@ -190,8 +211,6 @@ int main(int argc, char **argv) {
         }
         int numberOfLines = getNumberOfLines(file);
         filesArr = calloc((size_t) numberOfLines, sizeof(struct files));
-        struct rusage prevRusage;
-        getrusage(RUSAGE_CHILDREN, &prevRusage);
 
         for (int i = 0; i < numberOfLines; i++) {
             filesArr[i].name = calloc(256, sizeof(char));
@@ -272,24 +291,8 @@ int main(int argc, char **argv) {
             }
         }
 
-        for (int i = 0; i < numberOfLines; i++) {
-            int s = 0;
-            pid_t finished;
-            finished = waitpid(-1, &s, 0);
-            s = s >> 8;
-
-            struct rusage rusage;
-            getrusage(RUSAGE_CHILDREN, &rusage);
-            struct timeval ru_utime;
-            struct timeval ru_stime;
-            timersub(&rusage.ru_utime, &prevRusage.ru_utime, &ru_utime);
-            timersub(&rusage.ru_stime, &prevRusage.ru_stime, &ru_stime);
-            prevRusage = rusage;
-            printf("\n");
-            printf("User time: %d.%d seconds\nSystem time: %d.%d seconds\n\n", (int) ru_utime.tv_sec,
-                   (int) ru_utime.tv_usec, (int) ru_stime.tv_sec, (int) ru_stime.tv_usec);
-            printf("Proces %d utworzył %d kopii pliku\n", finished, s);
-        }
+        for (int i = 0; i < numberOfLines; i++)
+            waitpid(-1, NULL, 0);
 
         for (int i = 0; i < numberOfLines; i++) {
             free(filesArr[i].name);

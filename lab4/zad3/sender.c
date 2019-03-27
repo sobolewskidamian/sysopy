@@ -30,14 +30,19 @@ int main(int argc, char **argv) {
     char *mode = argv[3];
     printf("Sender PID: %d\n\n", getpid());
 
-    for (int i = 0; i < amountOfSignals; i++)
+    for (int i = 0; i < amountOfSignals; i++) {
         sendSignal(pid, SIGUSR1, mode);
+    }
 
     sendSignal(pid, SIGUSR2, mode);
 
+    struct sigaction action;
+    action.sa_handler = signalHandler;
+    action.sa_flags = 0;
+
     while (flagStopped == 0) {
-        signal(SIGUSR1, signalHandler);
-        signal(SIGUSR2, signalHandler);
+        sigaction(SIGUSR1, &action, NULL);
+        sigaction(SIGUSR2, &action, NULL);
     }
     printf("Odebranych przez sender: %d\n", counter);
 }

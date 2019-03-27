@@ -27,11 +27,18 @@ void sendSignal(int pid, int flag, char *mode) {
 }
 
 int main(int argc, char **argv) {
+    sigset_t sigset;
+    sigfillset(&sigset);
+    sigdelset(&sigset, SIGUSR1);
+    sigdelset(&sigset, SIGUSR2);
+    sigprocmask(SIG_BLOCK, &sigset, NULL);
+
     if (argc < 3 ||
         (strcmp(argv[2], "KILL") != 0 && strcmp(argv[2], "SIGQUEUE") != 0 && strcmp(argv[2], "SIGRT") != 0)) {
         printf("Bad arguments\n");
         return 1;
     }
+
     char *amountOfSignals = argv[1];
     char *mode = argv[2];
     printf("Catcher PID: %d\n", getpid());
@@ -54,12 +61,14 @@ int main(int argc, char **argv) {
         sigaction(SIGUSR1, &action, NULL);
         sigaction(SIGUSR2, &action, NULL);
     }
+
     printf("Wyslanych sygnałów: %s\n", amountOfSignals);
     printf("Odebranych przez catcher: %d\n\n", counter);
     printf("Wyslanych sygnałów: %d\n", counter);
 
-    for (int i = 0; i < counter; i++)
+    for (int i = 0; i < counter; i++) {
         sendSignal(senderPid, SIGUSR1, mode);
+    }
 
     sendSignal(senderPid, SIGUSR2, mode);
 }

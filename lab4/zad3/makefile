@@ -7,7 +7,7 @@ compile:
 	$(CC) catcher.c -o catcher
 
 run:
-	./catcher 500 KILL
+	./catcher 500 SIGQUEUE
 
 clean:
 	rm -f *.o

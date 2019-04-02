@@ -1,0 +1,2 @@
+ls -l ../ | cd zad1 | ls -al
+ls -al

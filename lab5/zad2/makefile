@@ -1,10 +1,10 @@
 GCC = gcc -Wall
 
-FNAME = "FF"
+FNAME = "fifo"
 
 all:
 	make compile
-	./main $(FNAME) 3 3
+	./main $(FNAME) 3
 
 compile:
 	$(GCC) -o main main.c

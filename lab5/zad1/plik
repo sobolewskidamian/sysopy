@@ -1,2 +1,1 @@
-ls -l ../ | cd zad1 | ls -al
-ls -al
+ls -al | grep main

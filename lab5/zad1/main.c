@@ -33,39 +33,36 @@ char **parseArguments(char *line) {
 
 void executeLine(char registry[]) {
     int commandCount = 0;
-    int pipes[2][2];
     char *commands[maxNumberOfCommands];
 
     while ((commands[commandCount] = strtok(commandCount == 0 ? registry : NULL, "|")) != NULL)
         commandCount++;
 
-    int i;
-    for (i = 0; i < commandCount; i++) {
-        if (i > 0) {
-            close(pipes[i % 2][0]);
-            close(pipes[i % 2][1]);
-        }
+    int pids[commandCount];
+    int pipe_count = commandCount - 1;
+    int *fds = calloc((size_t) pipe_count * 2, sizeof(int));
+    for (int i = 0; i < pipe_count; i++) pipe(fds + i * 2);
 
+    int j = 0;
+    for (int i = 0; i < commandCount; i++) {
         pid_t pid = fork();
+
         if (pid == 0) {
             char **exec = parseArguments(commands[i]);
-
-            if (i != commandCount - 1) {
-                close(pipes[i % 2][0]);
-                dup2(pipes[i % 2][1], STDOUT_FILENO);
-            }
-            if (i != 0) {
-                close(pipes[(i + 1) % 2][1]);
-                dup2(pipes[(i + 1) % 2][0], STDIN_FILENO);
-            }
+            if (i > 0) dup2(fds[j - 2], STDIN_FILENO);
+            if (i < commandCount - 1) dup2(fds[j + 1], STDOUT_FILENO);
             execvp(exec[0], exec);
-            exit(0);
         }
+
+        close(fds[j + 1]);
+        pids[i] = pid;
+        j += 2;
     }
-    close(pipes[i % 2][0]);
-    close(pipes[i % 2][1]);
-    wait(NULL);
-    exit(0);
+
+    for (int i = 0; i < commandCount; i++) {
+        int s = 0;
+        waitpid(pids[i], &s, 0);
+    }
 }
 
 int main(int argc, char **argv) {

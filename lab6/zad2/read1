@@ -1,0 +1,7 @@
+LIST
+2ALL Wiadomosc1 read1
+FRIENDS 1 2
+2FRIENDS Wiadomosc2 read1
+READ read2
+LIST
+STOP

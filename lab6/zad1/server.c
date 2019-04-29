@@ -49,17 +49,18 @@ void respondInit() {
     int client_qid = request.num1;
     clients[i] = client_qid;
     request.num1 = i;
-    removeActiveFriends(i);
 
     msgsnd(client_qid, &request, sizeof(struct Message) - sizeof(long), 0);
 }
 
 void respondStop() {
+    int client_id = request.num1;
     int client_qid = request.num2;
     request.type = request.req_type = STOP;
     for (int i = 0; i < MAX_ROOM_SIZE; i++)
         if (clients[i] == client_qid) clients[i] = 0;
 
+    removeActiveFriends(client_id);
     request.num1 = -1;
     request.num2 = -1;
 

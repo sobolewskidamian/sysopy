@@ -53,9 +53,8 @@ void respondInit() {
     mqd_t client_qd = mq_open(client_name, O_WRONLY);
     clients[i] = client_qd;
     request.num1 = i;
-    removeActiveFriends(i);
 
-    mq_send(client_qd, (const char*) &request, sizeof(struct Message), request.req_type);
+    mq_send(client_qd, (const char *) &request, sizeof(struct Message), request.req_type);
 }
 
 void respondStop() {
@@ -64,10 +63,11 @@ void respondStop() {
     for (int i = 0; i < MAX_ROOM_SIZE; i++)
         if (clients[i] == client_qd) clients[i] = 0;
 
+    removeActiveFriends(client_qd);
     request.num1 = -1;
     request.num2 = -1;
 
-    mq_send(client_qd, (const char*) &request, sizeof(struct Message), request.req_type);
+    mq_send(client_qd, (const char *) &request, sizeof(struct Message), request.req_type);
     mq_close(client_qd);
 }
 
@@ -76,7 +76,7 @@ void respondEcho() {
     request.req_type = ECHO;
     timestampMessage(request.num1, request.arg1);
 
-    mq_send(client_qd, (const char*) &request, sizeof(struct Message), request.req_type);
+    mq_send(client_qd, (const char *) &request, sizeof(struct Message), request.req_type);
 }
 
 void respondToAll() {
@@ -88,7 +88,7 @@ void respondToAll() {
         if (client_qd == 0)
             continue;
 
-        mq_send(client_qd, (const char*) &request, sizeof(struct Message), request.req_type);
+        mq_send(client_qd, (const char *) &request, sizeof(struct Message), request.req_type);
     }
 }
 
@@ -101,7 +101,7 @@ void respondToFriends() {
         if (client_qd == 0)
             continue;
 
-        mq_send(client_qd, (const char*) &request, sizeof(struct Message), request.req_type);
+        mq_send(client_qd, (const char *) &request, sizeof(struct Message), request.req_type);
     }
 }
 
@@ -113,7 +113,7 @@ void respondToOne() {
     if (client_qd == 0)
         return;
 
-    mq_send(client_qd, (const char*) &request, sizeof(struct Message), request.req_type);
+    mq_send(client_qd, (const char *) &request, sizeof(struct Message), request.req_type);
 }
 
 void respondList() {
@@ -144,7 +144,7 @@ void respondList() {
         strcat(request.arg2, "\n");
     }
 
-    mq_send(client_qd, (const char*) &request, sizeof(struct Message), request.req_type);
+    mq_send(client_qd, (const char *) &request, sizeof(struct Message), request.req_type);
 }
 
 void respondFriends() {
@@ -164,9 +164,10 @@ void respondFriends() {
                 continue;
             }
 
-            for (int i = 0; i < MAX_ROOM_SIZE; i++) {
+            int id = atoi(token);
+            for (int i = 0; id >= 0 && id < MAX_ROOM_SIZE && i < MAX_ROOM_SIZE; i++) {
                 if (friends[request.num1][i] == -1) {
-                    friends[request.num1][i] = atoi(token);
+                    friends[request.num1][i] = id;
                     token = strtok(NULL, " ");
                     break;
                 }
@@ -176,8 +177,9 @@ void respondFriends() {
         token = strtok(NULL, " ");
 
         while (token != NULL) {
-            for (int i = 0; i < MAX_ROOM_SIZE; i++) {
-                if (friends[request.num1][i] == atoi(token)) {
+            int id = atoi(token);
+            for (int i = 0; id >= 0 && id < MAX_ROOM_SIZE && i < MAX_ROOM_SIZE; i++) {
+                if (friends[request.num1][i] == id) {
                     friends[request.num1][i] = -1;
                     token = strtok(NULL, " ");
                     int iterator = i + 1;
@@ -196,12 +198,14 @@ void respondFriends() {
 
         int i = 0;
         while (token != NULL && i < MAX_ROOM_SIZE) {
-            friends[request.num1][i++] = atoi(token);
+            int id = atoi(token);
+            if (id >= 0 && id < MAX_ROOM_SIZE)
+                friends[request.num1][i++] = id;
             token = strtok(NULL, " ");
         }
     }
 
-    mq_send(client_qd, (const char*) &request, sizeof(struct Message), request.req_type);
+    mq_send(client_qd, (const char *) &request, sizeof(struct Message), request.req_type);
 }
 
 void handleExit() {
@@ -210,7 +214,7 @@ void handleExit() {
     for (int i = 0; i < MAX_ROOM_SIZE; i++) {
         if (clients[i] == 0)
             continue;
-        mq_send(clients[i], (const char*) &request, sizeof(struct Message), request.req_type);
+        mq_send(clients[i], (const char *) &request, sizeof(struct Message), request.req_type);
         mq_close(clients[i]);
     }
 
@@ -240,9 +244,7 @@ int main(int argc, char **argv) {
     printf("Queue ID: %d\nListening...\n", queue_descriptor);
 
     while (1) {
-        if(mq_receive(queue_descriptor, (char*) &request, sizeof(request), NULL)<0)
-            continue;
-
+        mq_receive(queue_descriptor, (char *) &request, sizeof(request), NULL);
 
         printRequest();
 

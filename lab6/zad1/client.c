@@ -17,7 +17,7 @@ struct Message message;
 
 void readInstructions(FILE *);
 
-void sendRequest(int);
+void sendRequest();
 
 void ServerMessages();
 
@@ -25,21 +25,21 @@ void sendEcho(const char *text) {
     message.type = message.req_type = ECHO;
     message.num1 = client_id;
     strcpy(message.arg1, text);
-    sendRequest(1);
+    sendRequest();
 }
 
 void sendToAll(const char *text) {
     message.type = message.req_type = ECHO_TO_ALL;
     message.num1 = client_id;
     strcpy(message.arg1, text);
-    sendRequest(1);
+    sendRequest();
 }
 
 void sendToFriends(const char *text) {
     message.type = message.req_type = ECHO_TO_FRIENDS;
     message.num1 = client_id;
     strcpy(message.arg1, text);
-    sendRequest(1);
+    sendRequest();
 }
 
 void sendToOne(int target_id, const char *text) {
@@ -47,27 +47,27 @@ void sendToOne(int target_id, const char *text) {
     message.num1 = client_id;
     message.num2 = target_id;
     strcpy(message.arg1, text);
-    sendRequest(1);
+    sendRequest();
 }
 
 void sendList() {
     message.type = message.req_type = LIST;
     message.num1 = client_id;
-    sendRequest(1);
+    sendRequest();
 }
 
 void sendStop() {
     message.type = message.req_type = STOP;
     message.num1 = client_id;
     message.num2 = client_qid;
-    sendRequest(1);
+    sendRequest();
 }
 
 void sendFriends(const char *text) {
     message.type = message.req_type = FRIENDS;
     message.num1 = client_id;
     strcpy(message.arg1, text);
-    sendRequest(1);
+    sendRequest();
 }
 
 void ServerShutdown() {
@@ -146,25 +146,22 @@ void readInstructions(FILE *f) {
     free(buffor);
 }
 
-
-void sendRequest(int waitFlag) {
+void sendRequest() {
     msgsnd(server_qid, &message, sizeof(struct Message) - sizeof(long), 0);
-
-    if (waitFlag == 0) {
-        struct Message res;
-        msgrcv(client_qid, &res, sizeof(struct Message) - sizeof(long), 0, 0);
-
-        message.num1 = res.num1;
-        message.num2 = res.num2;
-        strcpy(message.arg1, res.arg1);
-        strcpy(message.arg2, res.arg2);
-    }
 }
 
 void sendInit() {
     message.type = message.req_type = INIT;
     message.num1 = client_qid;
-    sendRequest(0);
+
+    sendRequest();
+    struct Message res;
+    msgrcv(client_qid, &res, sizeof(struct Message) - sizeof(long), 0, 0);
+    message.num1 = res.num1;
+    message.num2 = res.num2;
+    strcpy(message.arg1, res.arg1);
+    strcpy(message.arg2, res.arg2);
+
     printf("Client ID: %d\n", message.num1);
     client_id = message.num1;
 }

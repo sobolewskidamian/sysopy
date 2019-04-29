@@ -1,5 +1,3 @@
-#define _GNU_SOURCE
-
 #include <signal.h>
 #include <sys/types.h>
 #include <mqueue.h>
@@ -19,7 +17,7 @@ struct Message message;
 
 void readInstructions(FILE *);
 
-void sendRequest(int);
+void sendRequest();
 
 void ServerMessages();
 
@@ -27,21 +25,21 @@ void sendEcho(const char *text) {
     message.req_type = ECHO;
     message.num1 = client_id;
     strcpy(message.arg1, text);
-    sendRequest(1);
+    sendRequest();
 }
 
 void sendToAll(const char *text) {
     message.req_type = ECHO_TO_ALL;
     message.num1 = client_id;
     strcpy(message.arg1, text);
-    sendRequest(1);
+    sendRequest();
 }
 
 void sendToFriends(const char *text) {
     message.req_type = ECHO_TO_FRIENDS;
     message.num1 = client_id;
     strcpy(message.arg1, text);
-    sendRequest(1);
+    sendRequest();
 }
 
 void sendToOne(int target_id, const char *text) {
@@ -49,27 +47,27 @@ void sendToOne(int target_id, const char *text) {
     message.num1 = client_id;
     message.num2 = target_id;
     strcpy(message.arg1, text);
-    sendRequest(1);
+    sendRequest();
 }
 
 void sendList() {
     message.req_type = LIST;
     message.num1 = client_id;
-    sendRequest(1);
+    sendRequest();
 }
 
 void sendStop() {
     message.req_type = STOP;
     message.num1 = client_id;
     message.num2 = client_queue_descriptor;
-    sendRequest(1);
+    sendRequest();
 }
 
 void sendFriends(const char *text) {
     message.req_type = FRIENDS;
     message.num1 = client_id;
     strcpy(message.arg1, text);
-    sendRequest(1);
+    sendRequest();
 }
 
 void ServerShutdown() {
@@ -148,18 +146,15 @@ void readInstructions(FILE *f) {
 }
 
 
-void sendRequest(int waitFlag) {
+void sendRequest() {
     mq_send(server_queue_descriptor, (char *) &message, sizeof(struct Message), message.req_type);
-
-    if (waitFlag == 0) {
-        mq_receive(client_queue_descriptor, (char *) &message, sizeof(struct Message), NULL);
-    }
 }
 
 void sendInit() {
     message.req_type = INIT;
     strcpy(message.arg1, queue_name);
-    sendRequest(0);
+    sendRequest();
+    mq_receive(client_queue_descriptor, (char *) &message, sizeof(struct Message), NULL);
     printf("Client ID: %d\n", message.num1);
     client_id = message.num1;
 }

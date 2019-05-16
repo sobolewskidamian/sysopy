@@ -1,0 +1,354 @@
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 3x3
+Split type: block
+THREAD COUNT: 1
+Thread 0 took 47847us.
+Overall time: 48187us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 15x15
+Split type: block
+THREAD COUNT: 1
+Thread 0 took 971974us.
+Overall time: 972285us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 60x60
+Split type: block
+THREAD COUNT: 1
+Thread 0 took 15094147us.
+Overall time: 15094475us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 3x3
+Split type: interleaved
+THREAD COUNT: 1
+Thread 0 took 41668us.
+Overall time: 41904us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 15x15
+Split type: interleaved
+THREAD COUNT: 1
+Thread 0 took 964929us.
+Overall time: 965285us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 60x60
+Split type: interleaved
+THREAD COUNT: 1
+Thread 0 took 15015360us.
+Overall time: 15015659us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 3x3
+Split type: block
+THREAD COUNT: 2
+Thread 0 took 30466us.
+Thread 1 took 30209us.
+Overall time: 30629us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 15x15
+Split type: block
+THREAD COUNT: 2
+Thread 0 took 537878us.
+Thread 1 took 533139us.
+Overall time: 538021us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 60x60
+Split type: block
+THREAD COUNT: 2
+Thread 0 took 8079783us.
+Thread 1 took 7950745us.
+Overall time: 8079930us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 3x3
+Split type: interleaved
+THREAD COUNT: 2
+Thread 0 took 31042us.
+Thread 1 took 31229us.
+Overall time: 31384us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 15x15
+Split type: interleaved
+THREAD COUNT: 2
+Thread 0 took 529527us.
+Thread 1 took 527271us.
+Overall time: 529670us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 60x60
+Split type: interleaved
+THREAD COUNT: 2
+Thread 0 took 8017589us.
+Thread 1 took 8007724us.
+Overall time: 8017726us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 3x3
+Split type: block
+THREAD COUNT: 4
+Thread 0 took 13908us.
+Thread 1 took 14326us.
+Thread 2 took 16632us.
+Thread 3 took 13579us.
+Overall time: 16748us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 15x15
+Split type: block
+THREAD COUNT: 4
+Thread 0 took 298479us.
+Thread 1 took 301089us.
+Thread 2 took 307296us.
+Thread 3 took 291176us.
+Overall time: 307444us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 60x60
+Split type: block
+THREAD COUNT: 4
+Thread 0 took 4707689us.
+Thread 1 took 4761820us.
+Thread 2 took 4687974us.
+Thread 3 took 4603279us.
+Overall time: 4761995us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 3x3
+Split type: interleaved
+THREAD COUNT: 4
+Thread 0 took 14227us.
+Thread 1 took 15841us.
+Thread 2 took 14575us.
+Thread 3 took 13978us.
+Overall time: 15965us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 15x15
+Split type: interleaved
+THREAD COUNT: 4
+Thread 0 took 313239us.
+Thread 1 took 306547us.
+Thread 2 took 298522us.
+Thread 3 took 293567us.
+Overall time: 313463us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 60x60
+Split type: interleaved
+THREAD COUNT: 4
+Thread 0 took 4740029us.
+Thread 1 took 4638972us.
+Thread 2 took 4655697us.
+Thread 3 took 4713079us.
+Overall time: 4740173us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 3x3
+Split type: block
+THREAD COUNT: 8
+Thread 0 took 7020us.
+Thread 1 took 7020us.
+Thread 2 took 7072us.
+Thread 3 took 13760us.
+Thread 4 took 8162us.
+Thread 5 took 7253us.
+Thread 6 took 6837us.
+Thread 7 took 10032us.
+Overall time: 17234us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 15x15
+Split type: block
+THREAD COUNT: 8
+Thread 0 took 293804us.
+Thread 1 took 247691us.
+Thread 2 took 157324us.
+Thread 3 took 157495us.
+Thread 4 took 243909us.
+Thread 5 took 285875us.
+Thread 6 took 293325us.
+Thread 7 took 281872us.
+Overall time: 305945us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 60x60
+Split type: block
+THREAD COUNT: 8
+Thread 0 took 4670318us.
+Thread 1 took 4746206us.
+Thread 2 took 4653267us.
+Thread 3 took 4669854us.
+Thread 4 took 4723575us.
+Thread 5 took 4576108us.
+Thread 6 took 4637481us.
+Thread 7 took 4472875us.
+Overall time: 4746403us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 3x3
+Split type: interleaved
+THREAD COUNT: 8
+Thread 0 took 6983us.
+Thread 1 took 14104us.
+Thread 2 took 14057us.
+Thread 3 took 13917us.
+Thread 4 took 8105us.
+Thread 5 took 6985us.
+Thread 6 took 6979us.
+Thread 7 took 6629us.
+Overall time: 15898us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 15x15
+Split type: interleaved
+THREAD COUNT: 8
+Thread 0 took 286364us.
+Thread 1 took 303090us.
+Thread 2 took 217045us.
+Thread 3 took 302912us.
+Thread 4 took 282340us.
+Thread 5 took 240674us.
+Thread 6 took 264319us.
+Thread 7 took 280068us.
+Overall time: 312607us.
+
+
+
+IMAGE INFO
+Image name: # barbara.pgma created by PGMA_IO::PGMA_WRITE.
+Dimension: 512x512
+Colors: 220
+Filter size: 60x60
+Split type: interleaved
+THREAD COUNT: 8
+Thread 0 took 4682684us.
+Thread 1 took 4604770us.
+Thread 2 took 4503280us.
+Thread 3 took 4335980us.
+Thread 4 took 4553970us.
+Thread 5 took 4685745us.
+Thread 6 took 4708276us.
+Thread 7 took 4609075us.
+Overall time: 4725655us.
+
+
+

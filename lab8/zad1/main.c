@@ -10,7 +10,7 @@
 #define BLOCK 1
 #define INTERLEAVED 2
 
-struct Image_Transform {
+struct Transform {
     long size;
     double **values;
 };
@@ -25,13 +25,13 @@ struct Image {
 
 struct Thread {
     struct Image *image;
-    struct Image_Transform *trans;
+    struct Transform *transform;
     long start_num;
     long type;
     long thread_count;
 };
 
-int load_transform(struct Image_Transform *buf, const char *path) {
+int load_transform(struct Transform *buf, const char *path) {
     if (buf == NULL)
         return 1;
 
@@ -103,8 +103,8 @@ int load_image(struct Image *buf, const char *path) {
     char *header_sep = "\t\r\n";
     char *body_sep = "\t\r\n ";
 
-    char *magic_byte = strtok(pgma, header_sep);
-    if (magic_byte == NULL || strcmp(magic_byte, "P2") != 0)
+    char *header = strtok(pgma, header_sep);
+    if (header == NULL || strcmp(header, "P2") != 0)
         return 1;
 
     char *name = strtok(NULL, header_sep);
@@ -146,8 +146,8 @@ int load_image(struct Image *buf, const char *path) {
         if (row >= buf->height)
             break;
 
-        unsigned long grayscale = strtoul(token, NULL, 10);
-        pixels[row][col] = (unsigned char) grayscale;
+        unsigned long gray_scale = strtoul(token, NULL, 10);
+        pixels[row][col] = (unsigned char) gray_scale;
         col++;
     }
 
@@ -161,7 +161,7 @@ __time_t get_timestamp() {
     return current_time.tv_sec * (int) 1e6 + current_time.tv_usec;
 }
 
-int apply_on_pixel(struct Image *image, struct Image_Transform *transform, long row, long col) {
+int apply_on_pixel(struct Image *image, struct Transform *transform, long row, long col) {
     if (image == NULL || transform == NULL)
         return 1;
 
@@ -183,7 +183,7 @@ int apply_on_pixel(struct Image *image, struct Image_Transform *transform, long 
 void *thread_logic(void *arg) {
     struct Thread *thread = (struct Thread *) arg;
     struct Image *img = thread->image;
-    struct Image_Transform *trans = thread->trans;
+    struct Transform *trans = thread->transform;
     __time_t start_time = get_timestamp();
 
     long k = thread->start_num;
@@ -225,15 +225,15 @@ int save_image(struct Image *img, const char *path) {
             "P2\n%s\n%ld %ld\n%ld\n",
             img->name, img->width, img->height, img->colors);
 
-    int split_cnt = 0;
+    int split_count = 0;
     for (int row = 0; row < img->height; row++) {
         for (int col = 0; col < img->width; col++) {
-            if (split_cnt + 1 == img->width) {
+            if (split_count + 1 == img->width) {
                 fprintf(fp, " %3d\n", img->pixels[row][col]);
-                split_cnt = 0;
+                split_count = 0;
             } else {
                 fprintf(fp, " %3d", img->pixels[row][col]);
-                split_cnt += 1;
+                split_count += 1;
             }
         }
     }
@@ -264,9 +264,9 @@ int main(int argc, char **argv) {
     char *filter_path = argv[4];
     char *output_path = argv[5];
     pthread_t *threads;
-    struct Image_Transform *transform = malloc(sizeof(struct Image_Transform));
+    struct Transform *transform = malloc(sizeof(struct Transform));
     if (load_transform(transform, filter_path) != 0) {
-        printf("Error while reading the filer file.\n");
+        printf("Error while reading the filter file.\n");
         return 1;
     }
 
@@ -291,7 +291,7 @@ int main(int argc, char **argv) {
         pthread_t tid;
         struct Thread *thread = malloc(sizeof(struct Thread));
         thread->image = image;
-        thread->trans = transform;
+        thread->transform = transform;
         thread->start_num = i;
         thread->type = split_type;
         thread->thread_count = thread_count;

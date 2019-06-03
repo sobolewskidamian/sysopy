@@ -193,7 +193,7 @@ void *listener_thread(void *arg) {
     unlink(af_unix_path);
 
     printf("Listener stopping...\n");
-    return NULL;
+    exit(0);
 }
 
 void *input_thread(void *arg) {
@@ -238,7 +238,7 @@ void *input_thread(void *arg) {
             continue;
         }
 
-        if(sendto(cli_fd, &msg, sizeof(msg), 0, (sockaddr*) client_addr[cli_idx], sizeof(sockaddr)) < 0)
+        if (sendto(cli_fd, &msg, sizeof(msg), 0, (sockaddr *) client_addr[cli_idx], sizeof(sockaddr)) < 0)
             printf("Error sending request to FD %s\n", client_hostname[cli_idx]);
         else {
             client_busy[cli_idx]++;

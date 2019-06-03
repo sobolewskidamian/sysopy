@@ -209,7 +209,7 @@ void *listener_thread(void *arg) {
     unlink(af_unix_path);
 
     printf("Listener stopping...\n");
-    return NULL;
+    exit(0);
 }
 
 void *input_thread(void *arg) {

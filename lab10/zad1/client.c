@@ -123,7 +123,7 @@ int main(int argc, char **argv) {
     else
         sock_type = NIX_SOCK;
 
-    if (sock_type & NET_SOCK) {
+    if (sock_type == NET_SOCK) {
         int port = (int) strtol(address, NULL, 10);
         if (port < 0 || port >= 1 << 16) {
             printf("INET port must be in range %d-%d.", 0, 1 << 16);

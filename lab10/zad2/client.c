@@ -11,7 +11,7 @@
 
 #define NIX_SOCK 1
 #define NET_SOCK 2
-#define CLI_NAME "/tmp/cli"
+#define CLI_NAME "/tmp/cli2"
 
 static volatile int RUNNING = 1;
 
@@ -31,7 +31,7 @@ sockaddr *get_destination_addr(int type, void *identifier) {
     sockaddr *addr = malloc(sizeof(sockaddr));
     memset(addr, 0, sizeof(sockaddr));
 
-    if (type & NIX_SOCK) {
+    if (type == NIX_SOCK) {
         sockaddr_un unix_addr;
         char *sockpath = (char *) identifier;
         memset(&unix_addr, 0, sizeof(unix_addr));
@@ -63,6 +63,7 @@ int connect_unix(void) {
     client_addr.sun_family = AF_UNIX;
     strcpy(client_addr.sun_path, CLI_NAME);
 
+    unlink(CLI_NAME);
     if (bind(sock_fd, (sockaddr *) &client_addr, sizeof(client_addr)) < 0) {
         printf("UNIX: Unable to bind");
         exit(1);
@@ -155,7 +156,7 @@ int main(int argc, char **argv) {
 
     signal(SIGINT, exit_handler);
 
-    if (sock_type & NET_SOCK) {
+    if (sock_type == NET_SOCK) {
         int port = (int) strtol(address, NULL, 10);
         if (port < 0 || port >= 1 << 16) {
             printf("INET port must be in range %d-%d.", 0, 1 << 16);
